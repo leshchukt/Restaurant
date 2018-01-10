@@ -10,6 +10,10 @@ public class User {
 
     private User(){}
 
+    public Role getRole() {
+        return role;
+    }
+
     public static Builder builder() {
         return new User().new Builder();
     }
@@ -40,11 +44,5 @@ public class User {
             User.this.role = role;
             return this;
         }
-    }
-
-    private enum Role {
-        ADMIN,
-        CLIENT,
-        GUEST
     }
 }

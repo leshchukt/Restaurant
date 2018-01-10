@@ -5,6 +5,7 @@ import model.entity.Category;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCCategoryDao implements CategoryDao{
     private Connection connection;
@@ -19,7 +20,7 @@ public class JDBCCategoryDao implements CategoryDao{
     }
 
     @Override
-    public Category findById(int id) {
+    public Optional<Category> findById(int id) {
         return null;
     }
 

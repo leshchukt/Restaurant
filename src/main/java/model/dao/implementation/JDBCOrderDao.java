@@ -5,6 +5,7 @@ import model.entity.Order;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCOrderDao implements OrderDao {
     private Connection connection;
@@ -18,7 +19,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public Order findById(int id) {
+    public Optional<Order> findById(int id) {
         return null;
     }
 

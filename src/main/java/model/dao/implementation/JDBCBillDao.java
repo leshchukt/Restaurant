@@ -3,8 +3,11 @@ package model.dao.implementation;
 import model.dao.BillDao;
 import model.entity.Bill;
 
+import javax.crypto.spec.OAEPParameterSpec;
+import java.awt.font.OpenType;
 import java.sql.Connection;
 import java.util.List;
+import java.util.Optional;
 
 public class JDBCBillDao implements BillDao {
     private Connection connection;
@@ -19,7 +22,7 @@ public class JDBCBillDao implements BillDao {
     }
 
     @Override
-    public Bill findById(int id) {
+    public Optional<Bill> findById(int id) {
         return null;
     }
 

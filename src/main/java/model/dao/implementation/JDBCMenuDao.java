@@ -23,7 +23,7 @@ public class JDBCMenuDao implements MenuDao {
     }
 
     @Override
-    public Menu findById(int id) {
+    public Optional<Menu> findById(int id) {
         return null;
     }
 

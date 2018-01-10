@@ -11,7 +11,6 @@
     <title>Menu</title>
 </head>
 <body>
-Menu:
-<%=request.getAttribute("menu")%>
+Menu
 </body>
 </html>

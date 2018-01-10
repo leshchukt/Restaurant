@@ -1,11 +1,15 @@
 package model.entity;
 
 public class Login {
-    private User user;
+    private int id;
     private String email;
     private String password;
 
     private Login(){}
+
+    public int getId() {
+        return id;
+    }
 
     public static Builder builder(){
         return new Login().new Builder();
@@ -14,7 +18,7 @@ public class Login {
     @Override
     public String toString() {
         return "Login{" +
-                "user=" + user +
+                "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
@@ -27,8 +31,8 @@ public class Login {
             return Login.this;
         }
 
-        public Builder setUser(User user) {
-            Login.this.user = user;
+        public Builder setId(int id) {
+            Login.this.id = id;
             return this;
         }
 
