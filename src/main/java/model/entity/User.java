@@ -10,6 +10,10 @@ public class User {
 
     private User(){}
 
+    public int getId() {
+        return id;
+    }
+
     public Role getRole() {
         return role;
     }

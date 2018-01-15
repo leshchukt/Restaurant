@@ -13,14 +13,14 @@
     <title>Login Page</title>
 </head>
 <body>
-<form name="log" method="post" action="LoginServlet">
-    Email <input type="text" name="email"><br>
+<form name="log" method="post" action="">
+    Email <input type="text" name="email" /><br>
     Password <input type="password" name="password"><br>
     <input type="radio" name="language" value="UA">UA
     <input type="radio" name="language" value="EN">EN
     <br>
     <input type="submit" value="Log in">
 </form>
-<a href="/view/registration.jsp">Sign up</a>
+<a href="/view/guest/registration.jsp">Sign up</a>
 </body>
 </html>

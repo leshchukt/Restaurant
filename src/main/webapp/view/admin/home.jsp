@@ -12,5 +12,8 @@
 </head>
 <body>
 Menu
+<form>
+    <input type="submit" value="Log out">
+</form>
 </body>
 </html>

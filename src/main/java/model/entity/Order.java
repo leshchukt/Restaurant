@@ -12,6 +12,10 @@ public class Order {
 
     private Order(){}
 
+    public int getId() {
+        return id;
+    }
+
     public static Builder builder() {
         return new Order().new Builder();
     }
