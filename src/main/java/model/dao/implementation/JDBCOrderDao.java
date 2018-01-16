@@ -37,9 +37,4 @@ public class JDBCOrderDao implements OrderDao {
     public void delete(int id) {
 
     }
-
-    @Override
-    public void close() {
-
-    }
 }

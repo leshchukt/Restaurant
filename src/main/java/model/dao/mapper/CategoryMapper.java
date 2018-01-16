@@ -11,8 +11,8 @@ public class CategoryMapper implements EntityMapper<Category>{
     @Override
     public Category extractFromResultSet(ResultSet resultSet) throws SQLException {
         return new Category(
-                resultSet.getInt("idcategory"),
-                resultSet.getString("name")
+                resultSet.getInt(ColumnLabel.ID_CATEGORY),
+                resultSet.getString(ColumnLabel.NAME)
         );
     }
 

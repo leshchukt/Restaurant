@@ -12,10 +12,10 @@ public class MenuMapper implements EntityMapper<Menu>{
     @Override
     public Menu extractFromResultSet(ResultSet resultSet) throws SQLException{
         return Menu.builder()
-                .setId(resultSet.getInt("idmenu"))
-                .setTitle(resultSet.getString("title"))
-                .setPrice(resultSet.getDouble("price"))
-                .setWeight(resultSet.getInt("weight"))
+                .setId(resultSet.getInt(ColumnLabel.ID_MENU))
+                .setTitle(resultSet.getString(ColumnLabel.TITLE))
+                .setPrice(resultSet.getDouble(ColumnLabel.PRICE))
+                .setWeight(resultSet.getInt(ColumnLabel.WEIGHT))
                 .build();
     }
 

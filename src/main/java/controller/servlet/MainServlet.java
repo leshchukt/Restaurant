@@ -14,19 +14,21 @@ import java.io.IOException;
 public class MainServlet extends HttpServlet{
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processQuery(request, response);
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         processQuery(request, response);
     }
 
     private void processQuery(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException{
-        String query = (String) request.getAttribute("uri");
-        Command command = CommandFactory.create(query);
+        String uri = (String) request.getAttribute("uri");
+        Command command = CommandFactory.create(uri);
         String page = command.execute(request, response);
         if (page.startsWith("redirect:")) {
             request.setAttribute("uri", page.replace("redirect:", ""));

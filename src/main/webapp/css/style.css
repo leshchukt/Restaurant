@@ -1,0 +1,36 @@
+.login {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    padding: 16px;
+}
+
+.login input {
+    width: 40%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.login_button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 40%;
+}
+
+.not_registered_message {
+
+}
+
+.language_form input{
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    box-sizing: border-box;
+}

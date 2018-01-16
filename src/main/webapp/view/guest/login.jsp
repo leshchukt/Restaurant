@@ -1,26 +1,1 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: leshchuk.t
-  Date: 04.01.2018
-  Time: 19:46
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>--%>
-<html>
-<head>
-    <title>Login Page</title>
-</head>
-<body>
-<form name="log" method="post" action="">
-    Email <input type="text" name="email" /><br>
-    Password <input type="password" name="password"><br>
-    <input type="radio" name="language" value="UA">UA
-    <input type="radio" name="language" value="EN">EN
-    <br>
-    <input type="submit" value="Log in">
-</form>
-<a href="/view/guest/registration.jsp">Sign up</a>
-</body>
-</html>
+<%--  Created by IntelliJ IDEA.  User: leshchuk.t  Date: 04.01.2018  Time: 19:46  To change this template use File | Settings | File Templates.--%><%@ page contentType="text/html;charset=UTF-8" language="java" %><%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %><%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><fmt:setLocale value="${sessionScope.locale}" scope="session"/><fmt:setBundle basename="message" var="resourceBundle"/><html><head>    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>    <title>Login Page</title>    <link href="/css/style.css" rel="stylesheet" type="text/css"></head><body class="login"><form action="/restaurant/login" method="post">    <div class="container">        <input type="email"               pattern="[A-Za-z0-9._]+@[a-z]+\.(com|net|ru)"               title="<fmt:message key="login.email.regex.describe" bundle="${resourceBundle}"/>"               placeholder="<fmt:message key="login.email" bundle="${resourceBundle}"/>"               name="email" required/><br/>        <input type="password"               pattern=".{6,}"               title="<fmt:message key="login.password.regex.describe" bundle="${resourceBundle}"/>"               placeholder="<fmt:message key="login.password" bundle="${resourceBundle}"/>"               name="password" required /><br/>        <c:if test="${not empty requestScope.errorMessage}">        <p style="color:red">            <fmt:message key="${requestScope.errorMessage}" bundle="${resourceBundle}"/>        </p>        </c:if>        <button class="login_button">            <fmt:message key="login.login" bundle="${resourceBundle}"/>        </button>        <p class="not_registered_message">            <fmt:message key="login.not.registered" bundle="${resourceBundle}"/>            <a href="/restaurant/registration">                <fmt:message key="login.register" bundle="${resourceBundle}"/>            </a>        </p>    </div></form><div class="language-box">    <form class="language_form" action="/restaurant/change_locale">        <input type="hidden" name="page" value="/view/guest/login.jsp"/>        <input id="ua" type="submit" name="language" value="UA"/>        <input id="en" type="submit" name="language" value="EN"/>    </form></div></body></html>

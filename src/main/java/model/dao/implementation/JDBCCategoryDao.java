@@ -38,9 +38,4 @@ public class JDBCCategoryDao implements CategoryDao{
     public void delete(int id) {
 
     }
-
-    @Override
-    public void close() {
-
-    }
 }

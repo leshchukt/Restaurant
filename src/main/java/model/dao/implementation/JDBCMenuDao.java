@@ -1,22 +1,29 @@
 package model.dao.implementation;
 
 import model.dao.MenuDao;
+import model.dao.implementation.query.MenuQuery;
 import model.dao.mapper.CategoryMapper;
 import model.dao.mapper.MenuMapper;
 import model.entity.Category;
 import model.entity.Menu;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
 
 public class JDBCMenuDao implements MenuDao {
+
+    private static final Logger LOGGER = Logger.getLogger(JDBCMenuDao.class);
+
     private Connection connection;
 
     public JDBCMenuDao(Connection connection) {
         this.connection = connection;
     }
+
     @Override
     public void create(Menu entity) {
 
@@ -29,32 +36,15 @@ public class JDBCMenuDao implements MenuDao {
 
     @Override
     public List<Menu> findAll() {
-        List<Menu> meals = new ArrayList<>();
 
-        Map<Integer,Menu> menuMap = new HashMap<>();
-        Map<Integer,Category> categoryMap = new HashMap<>();
-
-        MenuMapper menuMapper = new MenuMapper();
-        CategoryMapper categoryMapper = new CategoryMapper();
-
-        try (Statement ps = connection.createStatement()){
-            ResultSet rs = ps.executeQuery("SELECT * FROM menu JOIN category USING (idcategory)");
-            while ( rs.next() ){
-                Category category = categoryMapper.makeUnique(
-                        categoryMap,
-                        categoryMapper.extractFromResultSet(rs)
-                );
-                Menu menu = menuMapper.makeUnique(
-                        menuMap,
-                        menuMapper.extractFromResultSet(rs)
-                );
-                menu.setCategory(category);
-                meals.add(menu);
-            }
+        try (Statement statement = connection.createStatement()){
+            ResultSet resultSet = statement.executeQuery(MenuQuery.SELECT_ALL);
+            return getFromRS(resultSet);
         } catch (Exception e) {
+            LOGGER.error(e);
             throw new RuntimeException("problem in findAll");
         }
-        return meals;
+
     }
 
     @Override
@@ -67,8 +57,27 @@ public class JDBCMenuDao implements MenuDao {
 
     }
 
-    @Override
-    public void close() {
+    public List<Menu> getFromRS(ResultSet resultSet) throws SQLException{
+        List<Menu> meals = new ArrayList<>();
 
+        Map<Integer,Menu> menuMap = new HashMap<>();
+        Map<Integer,Category> categoryMap = new HashMap<>();
+
+        MenuMapper menuMapper = new MenuMapper();
+        CategoryMapper categoryMapper = new CategoryMapper();
+
+        while ( resultSet.next() ) {
+            Category category = categoryMapper.makeUnique(
+                    categoryMap,
+                    categoryMapper.extractFromResultSet(resultSet)
+            );
+            Menu menu = menuMapper.makeUnique(
+                    menuMap,
+                    menuMapper.extractFromResultSet(resultSet)
+            );
+            menu.setCategory(category);
+            meals.add(menu);
+        }
+        return meals;
     }
 }

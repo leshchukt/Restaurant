@@ -61,9 +61,4 @@ public class JDBCUserDao implements UserDao {
     public void delete(int id) {
 
     }
-
-    @Override
-    public void close() {
-
-    }
 }

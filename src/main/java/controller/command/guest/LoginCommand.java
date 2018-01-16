@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 public class LoginCommand implements Command {
-    private static final String EMAIL_REGEX = "[A-Za-z0-9._]+@[a-z]\\.(com|net)";
 
     private static final String EMAIL_PARAMETER = "email";
     private static final String PASSWORD_PARAMETER = "password";
@@ -29,11 +28,6 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);
-
-        if (!isEmailCorrect(email)) {
-            request.setAttribute(ERROR_ATTRIBUTE, "errors.email");
-            return LOG_IN_PAGE;
-        }
 
         Optional<User> user = loginService.getUser(email, password);
         if(user.isPresent()){
@@ -51,10 +45,6 @@ public class LoginCommand implements Command {
             request.setAttribute(ERROR_ATTRIBUTE, "errors.login");
             return LOG_IN_PAGE;
         }
-    }
-
-    private boolean isEmailCorrect(String email) {
-        return email.matches(EMAIL_REGEX);
     }
 
     private void initCommand(HttpServletRequest request) {

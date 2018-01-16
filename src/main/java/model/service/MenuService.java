@@ -1,5 +1,6 @@
 package model.service;
 
+import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
 import model.dao.MenuDao;
 import model.dao.implementation.JDBCMenuDao;
@@ -44,7 +45,8 @@ public class MenuService {
     }
 
     public List<Menu> getAllMenu(){
-        try (MenuDao menuDao = daoFactory.createMenuDao()) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
+            MenuDao menuDao = daoFactory.createMenuDao(connectionDao);
             return menuDao.findAll();
         }
     }

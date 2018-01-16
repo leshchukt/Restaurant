@@ -7,12 +7,13 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class LoginMapper implements EntityMapper<Login> {
+
     @Override
     public Login extractFromResultSet(ResultSet resultSet) throws SQLException {
         return Login.builder()
-                .setId(resultSet.getInt("iduser"))
-                .setEmail(resultSet.getString("email"))
-                .setPassword(resultSet.getString("password"))
+                .setId(resultSet.getInt(ColumnLabel.ID_USER))
+                .setEmail(resultSet.getString(ColumnLabel.EMAIL))
+                .setPassword(resultSet.getString(ColumnLabel.PASSWORD))
                 .build();
     }
 

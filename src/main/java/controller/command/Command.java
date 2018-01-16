@@ -13,7 +13,7 @@ public interface Command {
     String ERROR_500 = "/view/error/error500.jsp";
     String CLIENT_MENU_PAGE = "/view/client/menu.jsp";
     String CLIENT_ORDER_PAGE = "/view/client/order.jsp";
-    String CLIENT_CHECKS_PAGE = "/view/client/checks.jsp";
+    String CLIENT_BILLS_PAGE = "/view/client/bills.jsp";
     String ADMIN_ORDER_PAGE = "/view/admin/order.jsp";
 
     String execute(HttpServletRequest request, HttpServletResponse response);

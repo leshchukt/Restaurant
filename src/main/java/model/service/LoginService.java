@@ -1,5 +1,6 @@
 package model.service;
 
+import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
 import model.dao.LoginDao;
 import model.dao.UserDao;
@@ -29,8 +30,9 @@ public class LoginService {
     }
 
     public Optional<User> getUser(String email, String password){
-        try (LoginDao loginDao = daoFactory.createLoginDao();
-             UserDao userDao = daoFactory.createUserDao()){
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            LoginDao loginDao = daoFactory.createLoginDao(connectionDao);
+            UserDao userDao = daoFactory.createUserDao(connectionDao);
             Optional<Login> login = loginDao.findUser(email, password);
             if (login.isPresent()) {
                 return userDao.findById(login.get().getId());

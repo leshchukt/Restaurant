@@ -10,49 +10,50 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import static controller.command.CommandFactory.*;
 
 @WebFilter(urlPatterns = {"/restaurant/*"})
 public class AuthorizationFilter implements Filter {
-    private Set<String> guestQueries = new HashSet<>();
-    private Set<String> clientQueries = new HashSet<>();
-    private Set<String> adminQueries = new HashSet<>();
+    private Set<String> guestURI = new HashSet<>();
+    private Set<String> clientURI = new HashSet<>();
+    private Set<String> adminURI = new HashSet<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-    /*
-        // guest queries
-        guestQueries.add(LOGIN_PAGE);
-        guestQueries.add(LOGIN);
-        guestQueries.add(REGISTRATION);
-        guestQueries.add(REGISTER_USER);
-        guestQueries.add(SET_LOCALE);
 
-        // subscriber queries
-        clientQueries.add(GET_ORDER_MEALS);
-        clientQueries.add(CLIENT_HOME);
-        clientQueries.add(MEALS_SEARCH);
-        clientQueries.add(ADD_MEAL_TO_ORDER);
-        clientQueries.add(REMOVE_MEAL_FROM_ORDER);
-        clientQueries.add(CREATE_ORDER);
-        clientQueries.add(CLIENT_ORDER);
-        clientQueries.add(CLIENT_CHECKS);
-        clientQueries.add(CLIENT_DECLINE_ORDER);
-        clientQueries.add(PAY_CHECK);
-        clientQueries.add(EXIT);
+        // guest uris
+        guestURI.add(LOGIN_PAGE);
+        guestURI.add(LOGIN);
+        guestURI.add(REGISTRATION);
+        guestURI.add(REGISTER_USER);
+        guestURI.add(SET_LOCALE);
+
+        // subscriber URIs
+        clientURI.add(GET_ORDER_MEALS);
+        clientURI.add(CLIENT_HOME);
+        clientURI.add(MENU_SEARCH);
+        clientURI.add(ADD_MEAL_TO_ORDER);
+        clientURI.add(REMOVE_MEAL_FROM_ORDER);
+        clientURI.add(CREATE_ORDER);
+        clientURI.add(CLIENT_ORDER);
+        clientURI.add(CLIENT_BILLS);
+        clientURI.add(CLIENT_DECLINE_ORDER);
+        clientURI.add(PAY_BILL);
+        clientURI.add(EXIT);
 
 
-        // admin queries
-        adminQueries.add(ADMIN_HOME);
-        adminQueries.add(GO_TO_ORDER);
-        adminQueries.add(ADMIN_ACCEPT_ORDER);
-        adminQueries.add(ADMIN_DECLINE_ORDER);
-        adminQueries.add(EXIT);
-    */
+        // admin URIs
+        adminURI.add(ADMIN_HOME);
+        adminURI.add(GO_TO_ORDER);
+        adminURI.add(ADMIN_ACCEPT_ORDER);
+        adminURI.add(ADMIN_DECLINE_ORDER);
+        adminURI.add(EXIT);
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-    /*
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
@@ -61,25 +62,25 @@ public class AuthorizationFilter implements Filter {
 
         boolean isGuestAccess
                 = (user == null)
-                && guestQueries.contains(uri);
+                && guestURI.contains(uri);
 
         boolean isSubscriberAccess
                 = (user != null)
-                && clientQueries.contains(uri)
+                && clientURI.contains(uri)
                 && "CLIENT".equals(user.getRole().toString());
 
         boolean isAdminAccess
                 = (user != null)
-                && adminQueries.contains(uri)
+                && adminURI.contains(uri)
                 && "ADMIN".equals(user.getRole().toString());
 
         boolean isLoggedIn
                 = (user != null)
-                && guestQueries.contains(uri);
+                && guestURI.contains(uri);
 
         boolean needToSignIn
                 = (user == null)
-                && (clientQueries.contains(uri) || adminQueries.contains(uri));
+                && (clientURI.contains(uri) || adminURI.contains(uri));
 
         if (isGuestAccess || isSubscriberAccess || isAdminAccess) {
             request.setAttribute("uri", uri);
@@ -98,13 +99,13 @@ public class AuthorizationFilter implements Filter {
             request.setAttribute("uri", LOGIN_PAGE);
         }
         filterChain.doFilter(request, response);
-    */
+
     }
 
     @Override
     public void destroy() {
-        guestQueries = null;
-        clientQueries = null;
-        adminQueries = null;
+        guestURI = null;
+        clientURI = null;
+        adminURI = null;
     }
 }
