@@ -11,6 +11,18 @@ public class Login {
         return id;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public static Builder builder(){
         return new Login().new Builder();
     }
@@ -23,6 +35,7 @@ public class Login {
                 ", password='" + password + '\'' +
                 '}';
     }
+
 
     public class Builder {
         private Builder(){}

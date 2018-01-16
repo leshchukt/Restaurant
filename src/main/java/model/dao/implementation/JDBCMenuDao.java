@@ -25,8 +25,8 @@ public class JDBCMenuDao implements MenuDao {
     }
 
     @Override
-    public void create(Menu entity) {
-
+    public boolean create(Menu entity) {
+        return false;
     }
 
     @Override

@@ -2,11 +2,14 @@ package model.dao.implementation;
 
 import model.dao.LoginDao;
 import model.dao.implementation.query.LoginQuery;
+import model.dao.implementation.query.UserQuery;
 import model.dao.mapper.LoginMapper;
 import model.entity.Login;
+import model.exception.EmailAlreadyExistsException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public class JDBCLoginDao implements LoginDao {
@@ -19,7 +22,23 @@ public class JDBCLoginDao implements LoginDao {
     }
 
     @Override
-    public void create(Login entity) {
+    public boolean create(Login entity) throws EmailAlreadyExistsException{
+        String email = entity.getEmail();
+        if (isEmailExist(email)) {
+            throw new EmailAlreadyExistsException(email);
+        }
+        try (PreparedStatement statement = connection
+                .prepareStatement(LoginQuery.INSERT, Statement.RETURN_GENERATED_KEYS)){
+            statement.setInt(1, entity.getId());
+            statement.setString(2, email);
+            statement.setString(3, entity.getPassword());
+            return statement.executeUpdate() > 0;
+        }
+        catch (SQLException e){
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -63,6 +82,25 @@ public class JDBCLoginDao implements LoginDao {
     @Override
     public void delete(int id) {
 
+    }
+
+    private boolean isEmailExist(String email) {
+        Set<String> emails = findAllEmails();
+        return emails.contains(email);
+    }
+
+    private Set<String> findAllEmails() {
+        Set<String> emails = new HashSet<>();
+        try (Statement ps = connection.createStatement()){
+            ResultSet resultSet = ps.executeQuery(LoginQuery.SELECT_ALL_EMAILS);
+            while (resultSet.next()) {
+                emails.add(resultSet.getString("email"));
+            }
+            return emails;
+        } catch (Exception e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Login> getFromRS(ResultSet resultSet) throws SQLException{

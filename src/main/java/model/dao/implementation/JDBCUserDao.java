@@ -4,24 +4,42 @@ import model.dao.UserDao;
 import model.dao.implementation.query.UserQuery;
 import model.entity.Role;
 import model.entity.User;
+import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 public class JDBCUserDao implements UserDao {
+    private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
+
     private Connection connection;
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
-    @Override
-    public void create(User entity) {
 
+    @Override
+    public boolean create(User entity) {
+        try (PreparedStatement statement = connection
+                .prepareStatement(UserQuery.INSERT, Statement.RETURN_GENERATED_KEYS)){
+            statement.setString(1, entity.getNickname());
+            statement.setDate(2, Date.valueOf(entity.getBirthDate()));
+            statement.setString(3, entity.getRole().toString());
+            statement.executeUpdate();
+            ResultSet resultSet = statement.getGeneratedKeys();
+            if(resultSet.next()){
+                entity.setId(resultSet.getInt(1));
+                return true;
+            }
+            else return false;
+        }
+        catch (SQLException e){
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

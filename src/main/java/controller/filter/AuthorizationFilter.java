@@ -21,7 +21,7 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
-        // guest uris
+        // guest URIs
         guestURI.add(LOGIN_PAGE);
         guestURI.add(LOGIN);
         guestURI.add(REGISTRATION);
@@ -59,6 +59,10 @@ public class AuthorizationFilter implements Filter {
 
         String uri = request.getRequestURI();
         User user = (User) request.getSession().getAttribute("user");
+
+        if (guestURI.contains(uri)) {
+            user = null;
+        }
 
         boolean isGuestAccess
                 = (user == null)

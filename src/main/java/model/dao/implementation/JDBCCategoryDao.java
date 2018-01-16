@@ -15,8 +15,8 @@ public class JDBCCategoryDao implements CategoryDao{
     }
 
     @Override
-    public void create(Category entity) {
-
+    public boolean create(Category entity) {
+        return false;
     }
 
     @Override

@@ -23,8 +23,8 @@ public class JDBCBillDao implements BillDao {
     }
 
     @Override
-    public void create(Bill entity) {
-
+    public boolean create(Bill entity) {
+        return false;
     }
 
     @Override

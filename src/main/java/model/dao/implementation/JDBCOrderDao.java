@@ -14,8 +14,8 @@ public class JDBCOrderDao implements OrderDao {
         this.connection = connection;
     }
     @Override
-    public void create(Order entity) {
-
+    public boolean create(Order entity) {
+        return false;
     }
 
     @Override

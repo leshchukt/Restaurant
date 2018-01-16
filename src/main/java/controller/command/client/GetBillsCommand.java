@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GetBillsCommand implements Command {
     private static final String ATTRIBUTE_USER = "user";
-    private static final String ATTRIBUTE_CHECKS = "userChecks";
+    private static final String ATTRIBUTE_BILLS = "userBills";
 
     private static final Logger LOGGER = Logger.getLogger(GetBillsCommand.class);
 
@@ -27,10 +27,10 @@ public class GetBillsCommand implements Command {
 
         bills = service.getBills(client);
 
-        request.setAttribute(ATTRIBUTE_CHECKS, bills);
+        request.setAttribute(ATTRIBUTE_BILLS, bills);
         LOGGER.info("User " + client.getId() + " got his bills.");
 
-        return CLIENT_CHECKS_PAGE;
+        return CLIENT_BILLS_PAGE;
     }
 
     private void initCommand(HttpServletRequest request) {

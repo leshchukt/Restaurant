@@ -17,16 +17,28 @@ public class LoginService {
         daoFactory = DaoFactory.getInstance();
     }
 
-    public void registerUser(Login login, User user) throws EmailAlreadyExistsException{
-
-    }
-
     private static class Holder {
         private static LoginService INSTANCE = new LoginService();
     }
 
     public static LoginService getInstance() {
         return Holder.INSTANCE;
+    }
+
+    public void registerUser(Login login, User user) throws EmailAlreadyExistsException{
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
+            connectionDao.beginTransaction();
+            UserDao userDao = daoFactory.createUserDao(connectionDao);
+            if (userDao.create(user)) {
+                login.setId(user.getId());
+                LoginDao loginDao = daoFactory.createLoginDao(connectionDao);
+                if(loginDao.create(login)) {
+                    connectionDao.commitTransaction();
+                } else {
+                    connectionDao.rollbackTransaction();
+                }
+            }
+        }
     }
 
     public Optional<User> getUser(String email, String password){

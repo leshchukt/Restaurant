@@ -10,8 +10,20 @@ public class User {
 
     private User(){}
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
     public Role getRole() {
