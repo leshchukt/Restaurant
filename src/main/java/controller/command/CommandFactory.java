@@ -12,7 +12,7 @@ public class CommandFactory {
     public static final String REGISTER_USER = "/restaurant/registration/register";
     public static final String LOGIN = "/restaurant/login";
     public static final String SET_LOCALE = "/restaurant/change_locale";
-    public static final String EXIT = "/restaurant/exit";
+    public static final String LOGOUT = "/restaurant/logout";
 
 
     public static final String MENU_SEARCH = "/restaurant/client/menu";
@@ -81,8 +81,8 @@ public class CommandFactory {
                 return new AcceptOrderCommand();
             case ADMIN_DECLINE_ORDER:
                 return new DeclineOrderAdminCommand();
-            case EXIT:
-                return new ExitCommand();
+            case LOGOUT:
+                return new LogoutCommand();
             default:
                 return new UnknownCommand();
         }

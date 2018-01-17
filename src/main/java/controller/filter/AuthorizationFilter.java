@@ -39,7 +39,7 @@ public class AuthorizationFilter implements Filter {
         clientURI.add(CLIENT_BILLS);
         clientURI.add(CLIENT_DECLINE_ORDER);
         clientURI.add(PAY_BILL);
-        clientURI.add(EXIT);
+        clientURI.add(LOGOUT);
 
 
         // admin URIs
@@ -47,7 +47,7 @@ public class AuthorizationFilter implements Filter {
         adminURI.add(GO_TO_ORDER);
         adminURI.add(ADMIN_ACCEPT_ORDER);
         adminURI.add(ADMIN_DECLINE_ORDER);
-        adminURI.add(EXIT);
+        adminURI.add(LOGOUT);
     }
 
     @Override

@@ -31,11 +31,50 @@
 }
 
 .language-box {
-
+    left: 80%;
 }
 .language-box input{
-    width: 10%;
+    width: 5%;
     padding: 6px 10px;
     margin: 8px 0;
     display: inline-block;
+}
+
+* {
+    margin:0;
+    padding: 10px;
+}
+
+.left-menu {
+    width:210px;
+    margin:15px;
+}
+
+.left-menu ul{
+    list-style:none;
+}
+
+.left-menu li{
+    float: left;
+    list-style:none;
+    display:block;
+    line-height:32px;
+    height:64px;
+    margin:7px 0;
+    width:306px;
+}
+.left-menu li a{
+    display:block;
+    height:33px;
+    text-transform:uppercase;
+    font-size:16px;
+    line-height:32px;
+    padding:0 0 0 25px;
+    text-decoration:none;
+    color:dimgrey;
+    background: aliceblue;
+}
+.left-menu li a:hover{
+    background: whitesmoke;
+    color:dimgrey;
 }

@@ -42,7 +42,7 @@ public class LoginCommand implements Command {
         }
         else{
             LOGGER.info("Invalid attempt to log in.");
-            request.setAttribute(ERROR_ATTRIBUTE, "errors.login");
+            request.setAttribute(ERROR_ATTRIBUTE, "error.login");
             return LOG_IN_PAGE;
         }
     }

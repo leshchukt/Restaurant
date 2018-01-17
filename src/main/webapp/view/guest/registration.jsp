@@ -18,6 +18,7 @@
 </head>
 <body class="login">
 <form action="/restaurant/registration/register">
+    <h2><fmt:message key="registration.page" bundle="${resourceBundle}"/></h2>
     <c:forEach items="${requestScope.registrationErrors}" var="error">
         <p style="color: red">
             <fmt:message key="${error}" bundle="${resourceBundle}"/>
