@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="ctg" uri="custom_tags" %>
+<%@ taglib prefix="ct" uri="custom_tags" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="message" var="resourceBundle"/>
 

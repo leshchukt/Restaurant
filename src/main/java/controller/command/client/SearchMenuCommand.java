@@ -2,13 +2,18 @@ package controller.command.client;
 
 import controller.command.Command;
 import model.entity.Category;
+import model.exception.NoSuchIdException;
 import model.service.CategoryService;
 import model.service.MenuService;
+import org.apache.log4j.Logger;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SearchMenuCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(SearchMenuCommand.class);
+
     private static final String ATTRIBUTE_MENU = "menu";
     private static final String ATTRIBUTE_CATEGORIES = "categories";
     private static final String ATTRIBUTE_CURRENT = "currentCategory";
@@ -29,18 +34,25 @@ public class SearchMenuCommand implements Command {
     }
 
     private void setAttributes(HttpServletRequest request) {
-        request.getSession().setAttribute(ATTRIBUTE_MENU, menuService.getMenuByCategory(categoryId));
+        try {
+            request.getSession().setAttribute(ATTRIBUTE_MENU, menuService.getMenuByCategory(categoryId));
+            request.getSession().setAttribute(ATTRIBUTE_CURRENT, categoryService.getById(categoryId));
+        } catch (NoSuchIdException e) {
+            LOGGER.error(e.getMessage());
+            throw new RuntimeException(e);
+        }
         request.setAttribute(ATTRIBUTE_CATEGORIES, categoryService.getAllCategories());
-        request.getSession().setAttribute(ATTRIBUTE_CURRENT, categoryService.getById(categoryId));
     }
 
     private void initCommand(HttpServletRequest request) {
-        if(request.getParameter(PARAMETER_CATEGORY)!= null) {
-            categoryId = Integer.parseInt(request.getParameter(PARAMETER_CATEGORY));
+        String parameterCategory = request.getParameter(PARAMETER_CATEGORY);
+        if(parameterCategory != null) {
+            categoryId = Integer.parseInt(parameterCategory);
             return;
         }
-        if(request.getSession().getAttribute(ATTRIBUTE_CURRENT) != null ){
-            categoryId = ((Category)request.getSession().getAttribute(ATTRIBUTE_CURRENT)).getId();
+        Object attributeCategory = request.getSession().getAttribute(ATTRIBUTE_CURRENT);
+        if(attributeCategory != null ){
+            categoryId = ((Category)attributeCategory).getId();
             return;
         }
         categoryId = 1;

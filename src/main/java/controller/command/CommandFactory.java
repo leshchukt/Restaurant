@@ -60,7 +60,7 @@ public class CommandFactory {
             case GET_ORDER_MEALS:
                 return new OrderMealCommand();
             case ADD_MEAL_TO_ORDER:
-                return new AddMenuCommand();
+                return new AddMealToOrderCommand();
             case CLIENT_DECLINE_ORDER:
                 return new DeclineOrderCommand();
             case REMOVE_MEAL_FROM_ORDER:

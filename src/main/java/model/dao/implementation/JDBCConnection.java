@@ -8,6 +8,7 @@ import java.sql.SQLException;
 
 public class JDBCConnection implements ConnectionDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCConnection.class);
+
     private Connection connection;
     private boolean transactionUncommitted = false;
 

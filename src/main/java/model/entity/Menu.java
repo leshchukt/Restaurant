@@ -6,12 +6,27 @@ public class Menu {
     private double price;
     private int weight;
     private Category category;
-    //private Order[] orders;
 
     private Menu(){}
 
     public int getId() {
         return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public Category getCategory() {
+        return category;
     }
 
     public void setCategory(Category category) {

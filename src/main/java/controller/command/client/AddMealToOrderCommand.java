@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMenuCommand implements Command{
+public class AddMealToOrderCommand implements Command{
     private static String PARAMETER_MEAL = "meal";
     private static String PARAMETER_AMOUNT = "amount";
     private static String MESSAGE_ATTRIBUTE = "message";
@@ -22,22 +22,22 @@ public class AddMenuCommand implements Command{
 
     private static String REDIRECT_PAGE = "redirect:" + CommandFactory.MENU_SEARCH;
 
-    private static final Logger LOGGER = Logger.getLogger(AddMenuCommand.class);
+    private static final Logger LOGGER = Logger.getLogger(AddMealToOrderCommand.class);
 
-    private int menuId;
+    private int idMenu;
     private int amount;
     private User client;
-    private MenuService service = MenuService.getInstance();
+    private MenuService menuService = MenuService.getInstance();
     private List<Menu> menu;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);
 
-        service.addMealToList(menuId, amount, menu);
+        menuService.addMealToList(idMenu, amount, menu);
 
         request.getSession().setAttribute(ATTRIBUTE_ORDER_MEALS, menu);
-        LOGGER.info("User " + client.getId() + " added meal: " + menuId + " to order.");
+        LOGGER.info("User " + client.getId() + " added meal: " + idMenu + " to order.");
         request.setAttribute(MESSAGE_ATTRIBUTE, "message.added");
 
         return REDIRECT_PAGE;
@@ -45,12 +45,13 @@ public class AddMenuCommand implements Command{
     }
 
     private void initCommand(HttpServletRequest request) {
-        menuId = Integer.parseInt(request.getParameter(PARAMETER_MEAL));
+        idMenu = Integer.parseInt(request.getParameter(PARAMETER_MEAL));
         amount = Integer.parseInt(request.getParameter(PARAMETER_AMOUNT));
-        client = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
+        client = (User)request.getSession().getAttribute(ATTRIBUTE_USER);
         menu = getCurrentOrderMeals(request.getSession());
     }
 
+    @SuppressWarnings("unchecked")
     private List<Menu> getCurrentOrderMeals(HttpSession session) {
 
         List<Menu> currentOrderMeals = (List<Menu>) session.getAttribute(ATTRIBUTE_ORDER_MEALS);

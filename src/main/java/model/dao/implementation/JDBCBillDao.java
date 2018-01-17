@@ -17,6 +17,7 @@ public class JDBCBillDao implements BillDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCBillDao.class);
 
     private Connection connection;
+    private BillMapper billMapper = new BillMapper();
 
     public JDBCBillDao(Connection connection) {
         this.connection = connection;
@@ -36,13 +37,12 @@ public class JDBCBillDao implements BillDao {
     public List<Bill> findAll() {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(BillQuery.SELECT_ALL);
-            return getFromRS(resultSet);
+            return billMapper.extractListFromResultSet(resultSet);
         }
         catch (SQLException e){
             LOGGER.error(e);
             throw new RuntimeException(e);
         }
-
     }
 
     @Override
@@ -53,30 +53,5 @@ public class JDBCBillDao implements BillDao {
     @Override
     public void delete(int id) {
 
-    }
-
-    public List<Bill> getFromRS (ResultSet resultSet) throws SQLException{
-        List<Bill> bills = new ArrayList<>();
-
-        Map<Integer, Bill> billMap = new HashMap<>();
-        Map<Integer, User> userMap = new HashMap<>();
-
-        BillMapper billMapper = new BillMapper();
-        UserMapper userMapper = new UserMapper();
-
-        while ( resultSet.next() ){
-            User user = userMapper.makeUnique(
-                    userMap,
-                    userMapper.extractFromResultSet(resultSet)
-            );
-            Bill bill = billMapper.makeUnique(
-                    billMap,
-                    billMapper.extractFromResultSet(resultSet)
-            );
-            bill.setAdmin(user);
-            bills.add(bill);
-        }
-
-        return bills;
     }
 }

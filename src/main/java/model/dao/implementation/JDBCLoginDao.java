@@ -13,9 +13,10 @@ import java.sql.Date;
 import java.util.*;
 
 public class JDBCLoginDao implements LoginDao {
-
     private static final Logger LOGGER = Logger.getLogger(JDBCLoginDao.class);
+
     private Connection connection;
+    private LoginMapper loginMapper = new LoginMapper();
 
     public JDBCLoginDao(Connection connection) {
         this.connection = connection;
@@ -48,7 +49,6 @@ public class JDBCLoginDao implements LoginDao {
 
     @Override
     public Optional<Login> findUser(String email, String password) {
-        LoginMapper loginMapper = new LoginMapper();
         try (PreparedStatement ps = connection.prepareStatement(LoginQuery.SELECT_BY_EMAIL_AND_PASSWORD)){
             ps.setString(1, email);
             ps.setString(2, password);
@@ -67,10 +67,10 @@ public class JDBCLoginDao implements LoginDao {
     public List<Login> findAll() {
         try (Statement ps = connection.createStatement()){
             ResultSet resultSet = ps.executeQuery(LoginQuery.SELECT_ALL);
-            return getFromRS(resultSet);
+            return loginMapper.extractListFromResultSet(resultSet);
         } catch (Exception e) {
             LOGGER.error(e);
-            throw new RuntimeException("problem in findAll");
+            throw new RuntimeException(e);
         }
     }
 
@@ -101,19 +101,5 @@ public class JDBCLoginDao implements LoginDao {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }
-    }
-
-    public List<Login> getFromRS(ResultSet resultSet) throws SQLException{
-        Map<Integer,Login> loginMap = new HashMap<>();
-
-        LoginMapper loginMapper = new LoginMapper();
-
-        while ( resultSet.next() ){
-            loginMapper.makeUnique(
-                    loginMap,
-                    loginMapper.extractFromResultSet(resultSet)
-            );
-        }
-        return new ArrayList<>(loginMap.values());
     }
 }

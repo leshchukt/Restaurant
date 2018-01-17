@@ -2,6 +2,7 @@ package model.dao.implementation;
 
 import model.dao.UserDao;
 import model.dao.implementation.query.UserQuery;
+import model.dao.mapper.UserMapper;
 import model.entity.Role;
 import model.entity.User;
 import org.apache.log4j.Logger;
@@ -16,6 +17,7 @@ public class JDBCUserDao implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
 
     private Connection connection;
+    private UserMapper userMapper = new UserMapper();
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -47,22 +49,15 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement ps = connection.prepareStatement(UserQuery.SELECT_BY_ID)){
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
+
             if (resultSet.next()) {
-                return Optional.of(getUser(resultSet));
+                return Optional.of(userMapper.extractFromResultSet(resultSet));
             }
             return Optional.empty();
         } catch (SQLException e) {
+            LOGGER.error(e);
             throw new RuntimeException(e);
         }
-    }
-
-    private User getUser(ResultSet resultSet) throws SQLException{
-        return User.builder()
-                .setId(resultSet.getInt("iduser"))
-                .setNickname(resultSet.getString("nickname"))
-                .setBirthDate(resultSet.getDate("birthdate").toLocalDate())
-                .setRole(Role.valueOf(resultSet.getString("role")))
-                .build();
     }
 
     @Override
