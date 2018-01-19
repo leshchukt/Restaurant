@@ -4,7 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.Menu;
 import model.entity.User;
-import model.service.OrderService;
+import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class OrderMealCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(OrderMealCommand.class);
+
     private final static String PARAMETER_ORDER_ID = "order.id";
     private final static String ATTRIBUTE_ORDER_MEALS = "orderMeals";
     private final static String ATTRIBUTE_USER = "user";
@@ -22,9 +24,8 @@ public class OrderMealCommand implements Command {
     private List<Menu> menu;
     private User client;
 
+    //todo change classes to interfaces
     private OrderService orderService = OrderService.getInstance();
-
-    private static final Logger LOGGER = Logger.getLogger(OrderMealCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

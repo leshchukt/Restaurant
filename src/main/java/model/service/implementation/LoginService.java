@@ -1,4 +1,4 @@
-package model.service;
+package model.service.implementation;
 
 import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
@@ -7,10 +7,12 @@ import model.dao.UserDao;
 import model.entity.Login;
 import model.entity.User;
 import model.exception.EmailAlreadyExistsException;
+import model.service.GetLoginService;
+import model.service.RegisterLoginService;
 
 import java.util.Optional;
 
-public class LoginService {
+public class LoginService implements GetLoginService, RegisterLoginService {
     DaoFactory daoFactory;
 
     private LoginService() {
@@ -25,6 +27,7 @@ public class LoginService {
         return Holder.INSTANCE;
     }
 
+    @Override
     public void registerUser(Login login, User user) throws EmailAlreadyExistsException{
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             connectionDao.beginTransaction();
@@ -41,7 +44,8 @@ public class LoginService {
         }
     }
 
-    public Optional<User> getUser(String email, String password){
+    @Override
+    public Optional<User> getUser(String email, String password) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             LoginDao loginDao = daoFactory.createLoginDao(connectionDao);
             UserDao userDao = daoFactory.createUserDao(connectionDao);

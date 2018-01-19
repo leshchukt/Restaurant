@@ -52,7 +52,7 @@
 <c:forEach items="${sessionScope.menu}" var="meal">
     <div class="information-box">
         <form action="/restaurant/client/add_meal" method="post">
-            <input type="hidden" name="meal" value="${meal.id}">
+            <input type="hidden" name="meal.id" value="${meal.id}">
             <h3><fmt:message key="meal.title" bundle="${resourceBundle}"/>${meal.title}</h3>
             <p><fmt:message key="meal.price" bundle="${resourceBundle}"/><ct:price price="${meal.price}"/><br/>
                 <fmt:message key="meal.weight" bundle="${resourceBundle}"/><ct:weight weight="${meal.weight}"/>

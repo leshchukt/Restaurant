@@ -2,11 +2,11 @@ package controller.command.client;
 
 import controller.command.Command;
 import model.entity.Category;
-import model.exception.NoSuchIdException;
-import model.service.CategoryService;
-import model.service.MenuService;
+import model.service.GetCategoryService;
+import model.service.GetMenuByCategoryService;
+import model.service.implementation.CategoryService;
+import model.service.implementation.MenuService;
 import org.apache.log4j.Logger;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +20,8 @@ public class SearchMenuCommand implements Command {
 
     private static final String PARAMETER_CATEGORY = "category";
 
-    MenuService menuService = MenuService.getInstance();
-    CategoryService categoryService = CategoryService.getInstance();
+    GetMenuByCategoryService menuService = MenuService.getInstance();
+    GetCategoryService categoryService = CategoryService.getInstance();
 
     private int categoryId;
 
@@ -34,13 +34,8 @@ public class SearchMenuCommand implements Command {
     }
 
     private void setAttributes(HttpServletRequest request) {
-        try {
-            request.getSession().setAttribute(ATTRIBUTE_MENU, menuService.getMenuByCategory(categoryId));
-            request.getSession().setAttribute(ATTRIBUTE_CURRENT, categoryService.getById(categoryId));
-        } catch (NoSuchIdException e) {
-            LOGGER.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+        request.getSession().setAttribute(ATTRIBUTE_MENU, menuService.getMenuByCategory(categoryId));
+        request.getSession().setAttribute(ATTRIBUTE_CURRENT, categoryService.getById(categoryId));
         request.setAttribute(ATTRIBUTE_CATEGORIES, categoryService.getAllCategories());
     }
 

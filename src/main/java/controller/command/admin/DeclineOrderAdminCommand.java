@@ -5,7 +5,7 @@ import controller.command.CommandFactory;
 import model.entity.Order;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
-import model.service.BillService;
+import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

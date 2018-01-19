@@ -7,15 +7,14 @@ import model.entity.Login;
 import model.entity.Role;
 import model.entity.User;
 import model.exception.EmailAlreadyExistsException;
-import model.service.LoginService;
+import model.service.RegisterLoginService;
+import model.service.implementation.LoginService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 public class RegisterUserCommand implements Command {
 
@@ -37,7 +36,7 @@ public class RegisterUserCommand implements Command {
 
     private final String DATE_FORMAT = "yyyy-MM-dd";
 
-    private LoginService loginService = LoginService.getInstance();
+    private RegisterLoginService loginService = LoginService.getInstance();
 
     private final LocalDate MAX_DATE = LocalDate.now().minusYears(18);
 

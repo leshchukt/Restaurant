@@ -4,7 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
-import model.service.BillService;
+import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +22,7 @@ public class PayTheBillCommand implements Command{
     private User client;
     private int billId;
 
+    //todo change classes to interfaces
     private BillService billService = BillService.getInstance();
 
     @Override

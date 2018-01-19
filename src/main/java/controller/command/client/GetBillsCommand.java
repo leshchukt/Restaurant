@@ -3,7 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Bill;
 import model.entity.User;
-import model.service.BillService;
+import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +16,12 @@ public class GetBillsCommand implements Command {
 
     private static final Logger LOGGER = Logger.getLogger(GetBillsCommand.class);
 
-
+    //todo change classes to interfaces
+    private BillService service = BillService.getInstance();
 
     private User client;
     private List<Bill> bills;
-    private BillService service = BillService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);

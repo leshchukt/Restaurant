@@ -4,8 +4,8 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
-import model.service.BillService;
-import model.service.OrderService;
+import model.service.implementation.BillService;
+import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +16,8 @@ public class DeclineOrderCommand implements Command {
 
     private int orderId;
     private User client;
+
+    //todo change classes to interfaces
     private OrderService orderService = OrderService.getInstance();
     private BillService billService = BillService.getInstance();
 

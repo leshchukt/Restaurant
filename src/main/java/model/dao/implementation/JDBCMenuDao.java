@@ -4,6 +4,7 @@ import model.dao.MenuDao;
 import model.dao.implementation.query.LoginQuery;
 import model.dao.implementation.query.MenuQuery;
 import model.dao.mapper.CategoryMapper;
+import model.dao.mapper.EntityMapper;
 import model.dao.mapper.MenuMapper;
 import model.entity.Category;
 import model.entity.Menu;
@@ -16,8 +17,8 @@ public class JDBCMenuDao implements MenuDao {
 
     private static final Logger LOGGER = Logger.getLogger(JDBCMenuDao.class);
 
+    private EntityMapper<Menu> menuMapper = new MenuMapper();
     private Connection connection;
-    private MenuMapper menuMapper = new MenuMapper();
 
     public JDBCMenuDao(Connection connection) {
         this.connection = connection;
@@ -30,7 +31,16 @@ public class JDBCMenuDao implements MenuDao {
 
     @Override
     public Optional<Menu> findById(int id) {
-        return null;
+        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ID)){
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+            if (resultSet.next()) {
+                return Optional.of(menuMapper.extractFromResultSet(resultSet));
+            } else return Optional.empty();
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -40,7 +50,7 @@ public class JDBCMenuDao implements MenuDao {
             ResultSet resultSet = statement.executeQuery(MenuQuery.SELECT_ALL);
 
             return menuMapper.extractListFromResultSet(resultSet);
-        } catch (Exception e) {
+        } catch (SQLException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }

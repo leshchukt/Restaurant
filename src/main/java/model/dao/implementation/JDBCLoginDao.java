@@ -3,6 +3,7 @@ package model.dao.implementation;
 import model.dao.LoginDao;
 import model.dao.implementation.query.LoginQuery;
 import model.dao.implementation.query.UserQuery;
+import model.dao.mapper.EntityMapper;
 import model.dao.mapper.LoginMapper;
 import model.entity.Login;
 import model.exception.EmailAlreadyExistsException;
@@ -16,7 +17,7 @@ public class JDBCLoginDao implements LoginDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCLoginDao.class);
 
     private Connection connection;
-    private LoginMapper loginMapper = new LoginMapper();
+    private EntityMapper<Login> loginMapper = new LoginMapper();
 
     public JDBCLoginDao(Connection connection) {
         this.connection = connection;

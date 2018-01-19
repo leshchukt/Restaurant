@@ -2,6 +2,7 @@ package model.dao.implementation;
 
 import model.dao.UserDao;
 import model.dao.implementation.query.UserQuery;
+import model.dao.mapper.EntityMapper;
 import model.dao.mapper.UserMapper;
 import model.entity.Role;
 import model.entity.User;
@@ -17,7 +18,7 @@ public class JDBCUserDao implements UserDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class);
 
     private Connection connection;
-    private UserMapper userMapper = new UserMapper();
+    private EntityMapper<User> userMapper = new UserMapper();
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;

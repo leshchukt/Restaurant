@@ -4,10 +4,12 @@ import model.dao.CategoryDao;
 import model.dao.implementation.query.CategoryQuery;
 import model.dao.implementation.query.MenuQuery;
 import model.dao.mapper.CategoryMapper;
+import model.dao.mapper.EntityMapper;
 import model.dao.mapper.MenuMapper;
 import model.entity.Category;
 import org.apache.log4j.Logger;
 
+import javax.swing.text.html.parser.Entity;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,7 @@ public class JDBCCategoryDao implements CategoryDao{
     private static final Logger LOGGER = Logger.getLogger(CategoryDao.class);
 
     private Connection connection;
-    private CategoryMapper categoryMapper = new CategoryMapper();
+    private EntityMapper<Category> categoryMapper = new CategoryMapper();
 
     public JDBCCategoryDao(Connection connection) {
         this.connection = connection;

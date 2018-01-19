@@ -3,7 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Order;
 import model.entity.User;
-import model.service.OrderService;
+import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,15 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class HomeCommand implements Command {
+    private static final Logger LOGGER = Logger.getLogger(HomeCommand.class);
+
     private static String ATTRIBUTE_CLIENT_ORDERS = "ordersHistory";
     private static String ATTRIBUTE_USER = "user";
 
+    //todo change classes to interfaces
     private OrderService service = OrderService.getInstance();
 
     private User client;
     private List<Order> orders;
-
-    private static final Logger LOGGER = Logger.getLogger(HomeCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

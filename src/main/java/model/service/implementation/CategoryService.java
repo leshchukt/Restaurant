@@ -1,15 +1,16 @@
-package model.service;
+package model.service.implementation;
 
 import model.dao.CategoryDao;
 import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
 import model.entity.Category;
-import model.exception.NoSuchIdException;
+import model.service.GetCategoryService;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryService {
+public class CategoryService implements GetCategoryService{
+
     private DaoFactory daoFactory;
 
     private CategoryService(){
@@ -24,7 +25,7 @@ public class CategoryService {
         return Holder.INSTANCE;
     }
 
-
+    @Override
     public List<Category> getAllCategories() {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             CategoryDao categoryDao = daoFactory.createCategoryDao(connectionDao);
@@ -32,14 +33,15 @@ public class CategoryService {
         }
     }
 
-    public Category getById(int idCategory) throws NoSuchIdException{
+    @Override
+    public Category getById(int idCategory) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             CategoryDao categoryDao = daoFactory.createCategoryDao(connectionDao);
             Optional<Category> category = categoryDao.findById(idCategory);
             if (category.isPresent()) {
                 return category.get();
             }
-            throw new NoSuchIdException("idCategory" + idCategory);
+            throw new RuntimeException(NO_ID_EXCEPTION_MESSAGE);
         }
     }
 

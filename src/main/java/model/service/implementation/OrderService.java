@@ -1,23 +1,24 @@
-package model.service;
+package model.service.implementation;
 
+import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
+import model.dao.OrderDao;
 import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
+import model.service.CreateOrderService;
 import org.apache.log4j.Logger;
 
-import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class OrderService {
-    private DaoFactory factory;
+public class OrderService implements CreateOrderService{
     private static final Logger LOGGER = Logger.getLogger(OrderService.class);
 
+    private DaoFactory daoFactory;
+
     private OrderService(){
-        factory = DaoFactory.getInstance();
+        daoFactory = DaoFactory.getInstance();
     }
 
     private static class Holder{
@@ -28,7 +29,6 @@ public class OrderService {
         return Holder.INSTANCE;
     }
 
-
     public List<Order> ordersOfUser(User user){
         return null;
     }
@@ -37,9 +37,21 @@ public class OrderService {
         return null;
     }
 
+    @Override
+    public int createOrder(User client, List<Menu> menu){
+        Order order = Order.builder()
+                .setClient(client)
+                .setMenu(menu)
+                .setTimeOfOrder(LocalDateTime.now())
+                .setAccepted(false)
+                .build();
 
-    public int createOrder(User client, List<Menu> meals){
-        return 0;
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            orderDao.create(order);
+            return order.getId();
+        }
+
     }
 
     public int getSummaryPrice(Order order){

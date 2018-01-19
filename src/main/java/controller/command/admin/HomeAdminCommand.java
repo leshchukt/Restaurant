@@ -2,7 +2,7 @@ package controller.command.admin;
 
 import controller.command.Command;
 import model.entity.Order;
-import model.service.OrderService;
+import model.service.implementation.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

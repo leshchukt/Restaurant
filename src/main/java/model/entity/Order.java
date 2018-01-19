@@ -2,13 +2,15 @@ package model.entity;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class Order {
     private int id;
     private LocalDateTime timeOfOrder;
     private boolean accepted;
     private User client;
-    private Menu[] meals;
+    private List<Menu> menu;
 
     private Order(){}
 
@@ -16,19 +18,28 @@ public class Order {
         return id;
     }
 
-    public static Builder builder() {
-        return new Order().new Builder();
+    public LocalDateTime getTimeOfOrder() {
+        return timeOfOrder;
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", timeOfOrder=" + timeOfOrder +
-                ", accepted=" + accepted +
-                ", client=" + client +
-                ", meals=" + Arrays.toString(meals) +
-                '}';
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public User getClient() {
+        return client;
+    }
+
+    public List<Menu> getMenu() {
+        return menu;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public static Builder builder() {
+        return new Order().new Builder();
     }
 
     public class Builder {
@@ -58,8 +69,8 @@ public class Order {
             return this;
         }
 
-        public Builder setMeals(Menu[] meals) {
-            Order.this.meals = Arrays.copyOf(meals, meals.length);
+        public Builder setMenu(List<Menu> menu) {
+            Order.this.menu = menu;
             return this;
         }
     }

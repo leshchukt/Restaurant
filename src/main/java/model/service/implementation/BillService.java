@@ -1,4 +1,4 @@
-package model.service;
+package model.service.implementation;
 
 import model.dao.DaoFactory;
 import model.entity.Bill;

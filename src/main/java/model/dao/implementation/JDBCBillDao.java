@@ -4,6 +4,7 @@ import com.mysql.jdbc.util.ResultSetUtil;
 import model.dao.BillDao;
 import model.dao.implementation.query.BillQuery;
 import model.dao.mapper.BillMapper;
+import model.dao.mapper.EntityMapper;
 import model.dao.mapper.UserMapper;
 import model.entity.*;
 import org.apache.log4j.Logger;
@@ -17,7 +18,7 @@ public class JDBCBillDao implements BillDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCBillDao.class);
 
     private Connection connection;
-    private BillMapper billMapper = new BillMapper();
+    private EntityMapper<Bill> billMapper = new BillMapper();
 
     public JDBCBillDao(Connection connection) {
         this.connection = connection;

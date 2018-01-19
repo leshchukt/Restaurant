@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.entity.Login;
+import model.exception.EmailAlreadyExistsException;
 
 import java.util.Optional;
 
