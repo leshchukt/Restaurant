@@ -5,6 +5,7 @@ import controller.command.CommandFactory;
 import model.entity.Order;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
+import model.service.AdminBillService;
 import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
@@ -12,9 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class AcceptOrderCommand implements Command {
-    private Order order;
-    private User admin;
-
+    private static final Logger LOGGER = Logger.getLogger(AcceptOrderCommand.class);
 
     private static String ATTRIBUTE_CURRENT_ORDER = "currentOrder";
     private static String ATTRIBUTE_USER = "user";
@@ -22,9 +21,11 @@ public class AcceptOrderCommand implements Command {
 
     private static String REDIRECT_PAGE = "redirect:" + CommandFactory.ADMIN_HOME;
 
-    private BillService billService = BillService.getInstance();
+    private Order order;
+    private User admin;
 
-    private static final Logger LOGGER = Logger.getLogger(AcceptOrderCommand.class);
+    private AdminBillService billService = BillService.getInstance();
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);

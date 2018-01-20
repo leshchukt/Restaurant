@@ -9,15 +9,13 @@ import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
-import model.service.DeclineService;
-import model.service.GetBillsService;
-import model.service.PayService;
+import model.service.*;
 import org.apache.log4j.Logger;
 
 import java.util.List;
 import java.util.Optional;
 
-public class BillService implements GetBillsService, PayService, DeclineService {
+public class BillService implements GetBillsService, PayService, DeclineService, AdminBillService {
     private DaoFactory daoFactory;
     private static final Logger LOGGER = Logger.getLogger(BillService.class);
 
@@ -48,8 +46,41 @@ public class BillService implements GetBillsService, PayService, DeclineService 
         }
     }
 
-    public void acceptOrder(Order order, User admin) {
+    public Bill acceptOrder(Order order, User admin) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
+            connectionDao.beginTransaction();
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
 
+            order = orderDao.findById(order.getId()).get();
+            if(order.getAccepted() == 0) {
+                order.setAccepted(1);
+            }
+            else{
+                throw new ConcurrentProcessingException("concurrent.order");
+            }
+            orderDao.update(order);
+
+            AdminOrderService orderService = OrderService.getInstance();
+            int price = orderService.getSummaryPrice(order);
+
+            Bill bill = Bill.builder()
+                    .setIdOrder(order.getId())
+                    .setAdmin(admin)
+                    .setOrder(order)
+                    .setPrice(price)
+                    .build();
+
+            BillDao billDao = daoFactory.createBillDao(connectionDao);
+
+            if(!billDao.create(bill)){
+                connectionDao.rollbackTransaction();
+                return null;
+            }
+            else {
+                connectionDao.commitTransaction();
+                return bill;
+            }
+        }
     }
 
     public void payTheBill(int idBill) {

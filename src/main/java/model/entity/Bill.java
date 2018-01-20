@@ -69,8 +69,18 @@ public class Bill {
             return this;
         }
 
+        public Builder setOrder(Order order) {
+            Bill.this.order = order;
+            return this;
+        }
+
         public Builder setAdmin(User admin) {
             Bill.this.admin = admin;
+            return this;
+        }
+
+        public Builder setPrice(double price) {
+            Bill.this.price = price;
             return this;
         }
     }

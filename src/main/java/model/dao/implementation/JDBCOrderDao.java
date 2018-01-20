@@ -107,7 +107,17 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public List<Order> findAll() {
-        return null;
+        List<Order> orders = new ArrayList<>();
+        try (Statement statement = connection.createStatement()){
+            ResultSet resultSet = statement.executeQuery(OrderQuery.SELECT_ALL);
+            while (resultSet.next()) {
+                orders.add(orderMapper.extractFromResultSet(resultSet));
+            }
+            return orders;
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

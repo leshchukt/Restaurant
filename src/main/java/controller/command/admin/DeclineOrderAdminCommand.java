@@ -5,6 +5,7 @@ import controller.command.CommandFactory;
 import model.entity.Order;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
+import model.service.DeclineService;
 import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
@@ -12,8 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DeclineOrderAdminCommand implements Command{
-    private Order order;
-    private User admin;
+    private static final Logger LOGGER = Logger.getLogger(DeclineOrderAdminCommand.class);
 
     private static final String REDIRECT_PAGE = "redirect:" + CommandFactory.ADMIN_HOME;
 
@@ -21,10 +21,10 @@ public class DeclineOrderAdminCommand implements Command{
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_MESSAGE = "message";
 
-    private BillService billService = BillService.getInstance();
+    private Order order;
+    private User admin;
 
-    private static final Logger LOGGER = Logger.getLogger(DeclineOrderAdminCommand.class);
-
+    private DeclineService billService = BillService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -70,6 +70,10 @@ public class Order {
         this.accepted = accepted;
     }
 
+    public void setClient(User client) {
+        this.client = client;
+    }
+
     public class Builder {
         private Builder(){}
 

@@ -5,16 +5,16 @@ import model.entity.Category;
 import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
-import model.service.CreateOrderService;
-import model.service.GetOrdersService;
-import model.service.OrderHasMenuService;
+import model.service.*;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-public class OrderService implements CreateOrderService, GetOrdersService, OrderHasMenuService {
+public class OrderService implements CreateOrderService, GetOrdersService, OrderHasMenuService, ActiveOrdersService,
+        FullOrderService, AdminOrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderService.class);
 
     private DaoFactory daoFactory;
@@ -80,19 +80,37 @@ public class OrderService implements CreateOrderService, GetOrdersService, Order
 
     }
 
+    @Override
     public int getSummaryPrice(Order order){
-        return 0;
+        if(order.getMenu() == null){
+            order.setMenu(getOrderMenu(order.getId()));
+        }
+        int result = 0;
+        for(Menu menuItem : order.getMenu()){
+            result += menuItem.getPrice() * menuItem.getAmount();
+        }
+        return result;
     }
 
-    public boolean checkClientRightsOnOrder(int orderId, User client) {
-        return false;
-    }
-
-    public Order getFullInfoAboutOrder(int orderId) {
-        return null;
+    public Order getFullInfoAboutOrder(int idOrder) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            Order result = orderDao.findById(idOrder).get();
+            UserDao userDao = daoFactory.createUserDao(connectionDao);
+            User client = userDao.findById(result.getIdClient()).get();
+            result.setClient(client);
+            result.setMenu(getOrderMenu(result.getId()));
+            return result;
+        }
     }
 
     public List<Order> getActiveOrders() {
-        return null;
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            List<Order> result = orderDao.findAll().stream()
+                    .filter(order -> order.getAccepted()==0)
+                    .collect(Collectors.toList());
+            return result;
+        }
     }
 }
