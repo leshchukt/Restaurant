@@ -4,6 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.Menu;
 import model.entity.User;
+import model.service.OrderHasMenuService;
 import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
@@ -20,27 +21,26 @@ public class OrderMealCommand implements Command {
 
     private static final String REDIRECT_PAGE = "redirect:" + CommandFactory.CLIENT_HOME;
 
-    private int orderId;
+    private int idOrder;
     private List<Menu> menu;
     private User client;
 
-    //todo change classes to interfaces
-    private OrderService orderService = OrderService.getInstance();
+    private OrderHasMenuService orderService = OrderService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);
 
-        menu = orderService.getOrderMeals(orderId);
+        menu = orderService.getOrderMenu(idOrder);
 
         request.setAttribute(ATTRIBUTE_ORDER_MEALS, menu);
-        LOGGER.info("Client: " + client.getId() + " got meals from order: " + orderId);
+        LOGGER.info("Client: " + client.getId() + " got meals from order: " + idOrder);
 
         return REDIRECT_PAGE;
     }
 
     private void initCommand(HttpServletRequest request) {
-        orderId = Integer.parseInt(request.getParameter(PARAMETER_ORDER_ID));
+        idOrder = Integer.parseInt(request.getParameter(PARAMETER_ORDER_ID));
         client = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
     }
 }

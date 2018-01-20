@@ -1,5 +1,7 @@
 package model.dao;
 
+import model.entity.Bill;
+import model.entity.User;
 import model.exception.EmailAlreadyExistsException;
 
 import java.util.List;
@@ -9,6 +11,6 @@ public interface GenericDao<T> {
     boolean create (T entity) throws EmailAlreadyExistsException;
     Optional<T> findById(int id);
     List<T> findAll();
-    void update(T entity);
+    int update(T entity);
     void delete(int id);
 }

@@ -1,6 +1,7 @@
 package model.dao.mapper;
 
 import model.entity.Bill;
+import model.entity.Order;
 import model.entity.User;
 
 import java.sql.ResultSet;
@@ -18,19 +19,26 @@ public class BillMapper implements EntityMapper<Bill> {
 
         Map<Integer, Bill> billMap = new HashMap<>();
         Map<Integer, User> userMap = new HashMap<>();
+        Map<Integer, Order> orderMap = new HashMap<>();
 
-        UserMapper userMapper = new UserMapper();
+        EntityMapper<User> userMapper = new UserMapper();
+        EntityMapper<Order> orderMapper = new OrderMapper();
 
         while ( resultSet.next() ){
             User user = userMapper.makeUnique(
                     userMap,
                     userMapper.extractFromResultSet(resultSet)
             );
+            Order order = orderMapper.makeUnique(
+                    orderMap,
+                    orderMapper.extractFromResultSet(resultSet)
+            );
             Bill bill = makeUnique(
                     billMap,
                     extractFromResultSet(resultSet)
             );
             bill.setAdmin(user);
+            bill.setOrder(order);
             bills.add(bill);
         }
         return bills;

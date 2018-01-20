@@ -4,10 +4,12 @@ import model.dao.MenuDao;
 import model.dao.implementation.query.LoginQuery;
 import model.dao.implementation.query.MenuQuery;
 import model.dao.mapper.CategoryMapper;
+import model.dao.mapper.ColumnLabel;
 import model.dao.mapper.EntityMapper;
 import model.dao.mapper.MenuMapper;
 import model.entity.Category;
 import model.entity.Menu;
+import model.entity.Order;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -81,8 +83,44 @@ public class JDBCMenuDao implements MenuDao {
     }
 
     @Override
-    public void update(Menu entity) {
+    public List<Menu> getMenuFromOrder(Order order) {
+        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ORDER)){
+            ps.setInt(1, order.getId());
+            ResultSet resultSet = ps.executeQuery();
 
+            List<Menu> meals = new ArrayList<>();
+
+            Map<Integer,Menu> menuMap = new HashMap<>();
+            Map<Integer,Category> categoryMap = new HashMap<>();
+
+            CategoryMapper categoryMapper = new CategoryMapper();
+
+            while ( resultSet.next() ) {
+                Category category = categoryMapper.makeUnique(
+                        categoryMap,
+                        categoryMapper.extractFromResultSet(resultSet)
+                );
+                Menu menu = menuMapper.makeUnique(
+                        menuMap,
+                        menuMapper.extractFromResultSet(resultSet)
+                );
+
+                menu.setCategory(category);
+                menu.setAmount(resultSet.getInt(ColumnLabel.AMOUNT));
+                meals.add(menu);
+            }
+            order.setMenu(meals);
+            return meals;
+
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public int update(Menu entity) {
+        return 0;
     }
 
     @Override

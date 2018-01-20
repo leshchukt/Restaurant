@@ -4,6 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
+import model.service.DeclineService;
 import model.service.implementation.BillService;
 import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
@@ -17,9 +18,7 @@ public class DeclineOrderCommand implements Command {
     private int orderId;
     private User client;
 
-    //todo change classes to interfaces
-    private OrderService orderService = OrderService.getInstance();
-    private BillService billService = BillService.getInstance();
+    private DeclineService billService = BillService.getInstance();
 
     private static String PARAMETER_ORDER = "order.id";
     private static String ATTRIBUTE_USER = "user";
@@ -30,10 +29,7 @@ public class DeclineOrderCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);
-        if (!orderService.checkClientRightsOnOrder(orderId, client)) {
-            LOGGER.error("Client attempt to decline someones order.");
-            throw new RuntimeException();
-        }
+
         try {
             LOGGER.info("Client id: " + client.getId() + " declined order: " + orderId);
             billService.declineOrder(orderId);

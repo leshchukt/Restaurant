@@ -5,6 +5,7 @@ import model.dao.BillDao;
 import model.dao.implementation.query.BillQuery;
 import model.dao.mapper.BillMapper;
 import model.dao.mapper.EntityMapper;
+import model.dao.mapper.OrderMapper;
 import model.dao.mapper.UserMapper;
 import model.entity.*;
 import org.apache.log4j.Logger;
@@ -30,14 +31,47 @@ public class JDBCBillDao implements BillDao {
     }
 
     @Override
+    public List<Bill> findByClient(User client) {
+        try (PreparedStatement ps
+                     = connection.prepareStatement(BillQuery.SELECT_BY_CLIENT)){
+            ps.setInt(1, client.getId());
+
+            ResultSet resultSet = ps.executeQuery();
+
+            return billMapper.extractListFromResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Optional<Bill> findById(int id) {
-        return null;
+        try (PreparedStatement ps
+                     = connection.prepareStatement(BillQuery.SELECT_BY_ID)){
+            ps.setInt(1, id);
+            ResultSet resultSet = ps.executeQuery();
+
+            Bill bill = null;
+            if (resultSet.next()) {
+                bill = billMapper.extractFromResultSet(resultSet);
+                Order order = new OrderMapper().extractFromResultSet(resultSet);
+                User admin = new UserMapper().extractFromResultSet(resultSet);
+                bill.setOrder(order);
+                bill.setAdmin(admin);
+            }
+            return Optional.of(bill);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<Bill> findAll() {
         try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(BillQuery.SELECT_ALL);
+
             return billMapper.extractListFromResultSet(resultSet);
         }
         catch (SQLException e){
@@ -47,8 +81,8 @@ public class JDBCBillDao implements BillDao {
     }
 
     @Override
-    public void update(Bill entity) {
-
+    public int update(Bill entity) {
+        return 0;
     }
 
     @Override

@@ -4,6 +4,8 @@ public interface ColumnLabel {
     String PAYMENT_DATETIME = "payment_datetime";
     String ID_ORDER = "idorder";
     String ID_USER = "iduser";
+    String ID_CLIENT = "idclient";
+    String ID_ADMIN = "idadmin";
     String ID_CATEGORY = "idcategory";
     String NAME = "name";
     String EMAIL = "email";
@@ -12,6 +14,7 @@ public interface ColumnLabel {
     String TITLE = "title";
     String PRICE = "price";
     String WEIGHT = "weight";
+    String AMOUNT = "amount";
     String TIME_OF_ORDER = "time_of_order";
     String ACCEPTED = "accepted";
     String NICKNAME = "nickname";

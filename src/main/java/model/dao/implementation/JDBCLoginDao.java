@@ -76,8 +76,8 @@ public class JDBCLoginDao implements LoginDao {
     }
 
     @Override
-    public void update(Login entity) {
-
+    public int update(Login entity) {
+        return 0;
     }
 
     @Override

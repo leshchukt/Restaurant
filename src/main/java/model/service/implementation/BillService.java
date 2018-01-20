@@ -1,35 +1,106 @@
 package model.service.implementation;
 
+import model.dao.BillDao;
+import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
+import model.dao.OrderDao;
 import model.entity.Bill;
+import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
+import model.exception.ConcurrentProcessingException;
+import model.service.DeclineService;
+import model.service.GetBillsService;
+import model.service.PayService;
 import org.apache.log4j.Logger;
 
 import java.util.List;
+import java.util.Optional;
 
-public class BillService {
-    private DaoFactory factory;
+public class BillService implements GetBillsService, PayService, DeclineService {
+    private DaoFactory daoFactory;
     private static final Logger LOGGER = Logger.getLogger(BillService.class);
 
     private BillService(){
-        factory = DaoFactory.getInstance();
+        daoFactory = DaoFactory.getInstance();
     }
 
     public List<Bill> getBills(User client) {
         return null;
     }
 
-    public void declineOrder(int orderId) {
-
+    @Override
+    public void declineOrder(int idOrder) {
+        try(ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            connectionDao.beginTransaction();
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            Order order = orderDao.findById(idOrder).get();
+            if(order.getAccepted() == 0) {
+                order.setAccepted(-1);
+                if(orderDao.update(order) == 1){
+                    connectionDao.commitTransaction();
+                }
+                else throw new RuntimeException();
+            }
+            else {
+                throw new ConcurrentProcessingException("concurrent.order");
+            }
+        }
     }
 
     public void acceptOrder(Order order, User admin) {
 
     }
 
-    public void payTheBill(int billId) {
+    public void payTheBill(int idBill) {
+        try(ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            connectionDao.beginTransaction();
+            BillDao billDao = daoFactory.createBillDao(connectionDao);
+            Bill bill = billDao.findById(idBill).get();
 
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            addOrderWithMenuToBill(bill, orderDao);
+            addOrderPriceToBill(bill);
+            if(bill.getPayment_datetime() == null){
+                bill.pay();
+                billDao.update(bill);
+                connectionDao.commitTransaction();
+            }
+            else {
+                throw new ConcurrentProcessingException("concurrent.bill");
+            }
+        }
+    }
+
+    private void addOrderWithMenuToBill(Bill bill, OrderDao orderDao) {
+        Optional<Order> order = orderDao.findById(bill.getIdOrder());
+        if (order.isPresent()) {
+            bill.setOrder(order.get());
+        } else throw new RuntimeException(NO_ID_EXCEPTION_MESSAGE);
+    }
+
+    @Override
+    public List<Bill> getBillsByClient(User client) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            BillDao billDao = daoFactory.createBillDao(connectionDao);
+            List<Bill> bills = billDao.findByClient(client);
+
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            for (Bill bill : bills) {
+                addOrderWithMenuToBill(bill, orderDao);
+                addOrderPriceToBill(bill);
+            }
+
+            return bills;
+        }
+    }
+
+    private void addOrderPriceToBill(Bill bill) {
+        double price = 0.;
+        for (Menu menuItem : bill.getOrder().getMenu()) {
+            price += menuItem.getPrice() * menuItem.getAmount();
+        }
+        bill.setPrice(price);
     }
 
     private static class Holder {

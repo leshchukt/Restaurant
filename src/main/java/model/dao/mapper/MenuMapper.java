@@ -29,6 +29,7 @@ public class MenuMapper implements EntityMapper<Menu>{
                     menuMap,
                     extractFromResultSet(resultSet)
             );
+
             menu.setCategory(category);
             meals.add(menu);
         }
@@ -37,12 +38,19 @@ public class MenuMapper implements EntityMapper<Menu>{
 
     @Override
     public Menu extractFromResultSet(ResultSet resultSet) throws SQLException{
-        return Menu.builder()
+        Menu menu = Menu.builder()
                 .setId(resultSet.getInt(ColumnLabel.ID_MENU))
                 .setTitle(resultSet.getString(ColumnLabel.TITLE))
                 .setPrice(resultSet.getDouble(ColumnLabel.PRICE))
                 .setWeight(resultSet.getInt(ColumnLabel.WEIGHT))
                 .build();
+        /*
+        Category category = new Category(
+                resultSet.getInt(ColumnLabel.ID_CATEGORY),
+                resultSet.getString(ColumnLabel.NAME)
+        );
+        menu.setCategory(category);*/
+        return menu;
     }
 
     @Override

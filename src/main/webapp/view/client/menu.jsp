@@ -23,8 +23,8 @@
         <li><a href="/restaurant/client/home"><fmt:message key="client.home.page" bundle="${resourceBundle}"/></a></li>
         <li><a href="/restaurant/client/menu"><fmt:message key="client.menu.page" bundle="${resourceBundle}"/></a></li>
         <li><a href="/restaurant/client/order"><fmt:message key="client.order.page" bundle="${resourceBundle}"/></a></li>
-        <li><a href="/restaurant/client/bills"><fmt:message key="client.bill.page" bundle="${resourceBundle}"/></a></li>
-        <li><a href="/restaurant/logout"><fmt:message key="client.logout.page" bundle="${resourceBundle}"/></a></li>
+        <li><a href="/restaurant/client/bills"><fmt:message key="client.bills.page" bundle="${resourceBundle}"/></a></li>
+        <li><a href="/restaurant/logout"><fmt:message key="logout.page" bundle="${resourceBundle}"/></a></li>
     </ul>
 </div>
 
