@@ -29,7 +29,7 @@
 </div>
 <div>
     <h3 style="text-align: center"><fmt:message key="client.home.information" bundle="${resourceBundle}"/></h3>
-    <p><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.user.nickname}</p><br/>
+    <p><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.user.nickname}</p>
     <p><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>${sessionScope.user.birthDate}</p>
 </div>
 

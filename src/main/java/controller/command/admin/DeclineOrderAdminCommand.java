@@ -5,7 +5,7 @@ import controller.command.CommandFactory;
 import model.entity.Order;
 import model.entity.User;
 import model.exception.ConcurrentProcessingException;
-import model.service.DeclineService;
+import model.service.DeclineBillService;
 import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
@@ -24,7 +24,7 @@ public class DeclineOrderAdminCommand implements Command{
     private Order order;
     private User admin;
 
-    private DeclineService billService = BillService.getInstance();
+    private DeclineBillService billService = BillService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

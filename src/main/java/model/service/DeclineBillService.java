@@ -1,5 +1,5 @@
 package model.service;
 
-public interface DeclineService {
+public interface DeclineBillService {
     void declineOrder(int idOrder);
 }

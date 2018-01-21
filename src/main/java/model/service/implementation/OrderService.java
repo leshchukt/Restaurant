@@ -1,7 +1,6 @@
 package model.service.implementation;
 
 import model.dao.*;
-import model.entity.Category;
 import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
@@ -13,8 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class OrderService implements CreateOrderService, GetOrdersService, OrderHasMenuService, ActiveOrdersService,
-        FullOrderService, AdminOrderService {
+public class OrderService implements ClientOrderService, AdminOrderService {
     private static final Logger LOGGER = Logger.getLogger(OrderService.class);
 
     private DaoFactory daoFactory;
@@ -92,6 +90,7 @@ public class OrderService implements CreateOrderService, GetOrdersService, Order
         return result;
     }
 
+    @Override
     public Order getFullInfoAboutOrder(int idOrder) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
@@ -104,6 +103,7 @@ public class OrderService implements CreateOrderService, GetOrdersService, Order
         }
     }
 
+    @Override
     public List<Order> getActiveOrders() {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             OrderDao orderDao = daoFactory.createOrderDao(connectionDao);

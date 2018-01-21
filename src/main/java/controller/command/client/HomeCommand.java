@@ -3,7 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Order;
 import model.entity.User;
-import model.service.GetOrdersService;
+import model.service.ClientOrderService;
 import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,7 @@ public class HomeCommand implements Command {
     private static String ATTRIBUTE_CLIENT_ORDERS = "ordersHistory";
     private static String ATTRIBUTE_USER = "user";
 
-    private GetOrdersService orderService = OrderService.getInstance();
+    private ClientOrderService orderService = OrderService.getInstance();
 
     private User client;
     private List<Order> orders;

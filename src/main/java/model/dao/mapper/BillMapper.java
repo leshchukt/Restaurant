@@ -6,6 +6,7 @@ import model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,9 +47,10 @@ public class BillMapper implements EntityMapper<Bill> {
 
     @Override
     public Bill extractFromResultSet(ResultSet resultSet) throws SQLException {
+        Timestamp payment_datetime = resultSet.getTimestamp(ColumnLabel.PAYMENT_DATETIME);
         return Bill.builder()
                 .setIdOrder(resultSet.getInt(ColumnLabel.ID_ORDER))
-                .setPayment_datetime(resultSet.getTimestamp(ColumnLabel.PAYMENT_DATETIME).toLocalDateTime())
+                .setPayment_datetime(payment_datetime == null ? null : payment_datetime.toLocalDateTime())
                 .build();
     }
 

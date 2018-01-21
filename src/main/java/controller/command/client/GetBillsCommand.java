@@ -3,7 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Bill;
 import model.entity.User;
-import model.service.GetBillsService;
+import model.service.ClientBillService;
 import model.service.implementation.BillService;
 import org.apache.log4j.Logger;
 
@@ -17,7 +17,7 @@ public class GetBillsCommand implements Command {
     private static final String ATTRIBUTE_USER = "user";
     private static final String ATTRIBUTE_BILLS = "userBills";
 
-    private GetBillsService billService = BillService.getInstance();
+    private ClientBillService billService = BillService.getInstance();
 
     private User client;
     private List<Bill> bills;

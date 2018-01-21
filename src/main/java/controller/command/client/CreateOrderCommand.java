@@ -4,7 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.Menu;
 import model.entity.User;
-import model.service.CreateOrderService;
+import model.service.ClientOrderService;
 import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class CreateOrderCommand implements Command {
     private static final String CREATED_ORDER_MESSAGE = "message.order.created";
     private static final String REDIRECT_PAGE = "redirect:" + CommandFactory.CLIENT_HOME;
 
-    private CreateOrderService orderService = OrderService.getInstance();
+    private ClientOrderService orderService = OrderService.getInstance();
 
     private User client;
     private List<Menu> menu;

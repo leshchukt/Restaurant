@@ -2,8 +2,8 @@ package controller.command.client;
 
 import controller.command.Command;
 import model.entity.Category;
-import model.service.GetCategoryService;
-import model.service.GetMenuByCategoryService;
+import model.service.ClientMenuService;
+import model.service.ClientCategoryService;
 import model.service.implementation.CategoryService;
 import model.service.implementation.MenuService;
 import org.apache.log4j.Logger;
@@ -20,8 +20,8 @@ public class SearchMenuCommand implements Command {
 
     private static final String PARAMETER_CATEGORY = "category";
 
-    GetMenuByCategoryService menuService = MenuService.getInstance();
-    GetCategoryService categoryService = CategoryService.getInstance();
+    ClientMenuService menuService = MenuService.getInstance();
+    ClientCategoryService categoryService = CategoryService.getInstance();
 
     private int categoryId;
 

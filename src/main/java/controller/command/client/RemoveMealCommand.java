@@ -3,7 +3,7 @@ package controller.command.client;
 import controller.command.Command;
 import model.entity.Menu;
 import model.entity.User;
-import model.service.RemoveMenuItemService;
+import model.service.ClientMenuService;
 import model.service.implementation.MenuService;
 import org.apache.log4j.Logger;
 
@@ -22,7 +22,7 @@ public class RemoveMealCommand implements Command {
     private static String MESSAGE_ATTRIBUTE = "message";
     private static String MESSAGE_REMOVED = "message.removed";
 
-    private RemoveMenuItemService menuService = MenuService.getInstance();
+    private ClientMenuService menuService = MenuService.getInstance();
 
     private int idMenu;
     private int amount;

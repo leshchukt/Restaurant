@@ -4,6 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.Menu;
 import model.entity.User;
+import model.service.ClientMenuService;
 import model.service.implementation.MenuService;
 import org.apache.log4j.Logger;
 
@@ -25,7 +26,7 @@ public class AddMealToOrderCommand implements Command{
 
     private static String REDIRECT_PAGE = "redirect:" + CommandFactory.MENU_SEARCH;
 
-    private MenuService menuService = MenuService.getInstance();
+    private ClientMenuService menuService = MenuService.getInstance();
 
     private int idMenu;
     private int amount;

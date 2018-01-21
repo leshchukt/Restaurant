@@ -5,7 +5,7 @@ import controller.command.CommandFactory;
 import controller.command.util.PasswordSecurity;
 import model.entity.Role;
 import model.entity.User;
-import model.service.GetLoginService;
+import model.service.LogInService;
 import model.service.implementation.LoginService;
 import org.apache.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class LoginCommand implements Command {
     private static final String ERROR_ATTRIBUTE = "errorMessage";
     private static final Logger LOGGER = Logger.getLogger(LoginCommand.class);
 
-    private GetLoginService loginService = LoginService.getInstance();
+    private LogInService loginService = LoginService.getInstance();
 
     private String email;
     private String password;

@@ -7,12 +7,12 @@ import model.dao.UserDao;
 import model.entity.Login;
 import model.entity.User;
 import model.exception.EmailAlreadyExistsException;
-import model.service.GetLoginService;
+import model.service.LogInService;
 import model.service.RegisterLoginService;
 
 import java.util.Optional;
 
-public class LoginService implements GetLoginService, RegisterLoginService {
+public class LoginService implements LogInService, RegisterLoginService {
     DaoFactory daoFactory;
 
     private LoginService() {

@@ -6,15 +6,13 @@ import model.dao.DaoFactory;
 import model.dao.MenuDao;
 import model.entity.Category;
 import model.entity.Menu;
-import model.service.AddMenuItemService;
-import model.service.GetMenuByCategoryService;
-import model.service.RemoveMenuItemService;
+import model.service.ClientMenuService;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
-public class MenuService implements AddMenuItemService, RemoveMenuItemService, GetMenuByCategoryService {
+public class MenuService implements ClientMenuService {
     DaoFactory daoFactory;
 
     private MenuService(){

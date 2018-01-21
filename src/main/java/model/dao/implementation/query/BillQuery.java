@@ -6,4 +6,8 @@ public interface BillQuery {
             "WHERE iduser = idadmin AND idorder = ?";
     String SELECT_BY_CLIENT = "SELECT * FROM bill JOIN `order` USING (idorder) JOIN user " +
             "WHERE iduser = idadmin AND idclient = ?";
+
+    String INSERT = "INSERT INTO bill (payment_datetime, idorder, idadmin) VALUES (?, ?, ?)";
+
+    String UPDATE = "UPDATE bill SET payment_datetime = ? WHERE idorder = ?";
 }

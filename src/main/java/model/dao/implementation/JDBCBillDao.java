@@ -2,6 +2,7 @@ package model.dao.implementation;
 
 import com.mysql.jdbc.util.ResultSetUtil;
 import model.dao.BillDao;
+import model.dao.ConnectionDao;
 import model.dao.implementation.query.BillQuery;
 import model.dao.mapper.BillMapper;
 import model.dao.mapper.EntityMapper;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import javax.crypto.spec.OAEPParameterSpec;
 import java.awt.font.OpenType;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class JDBCBillDao implements BillDao {
@@ -27,7 +29,15 @@ public class JDBCBillDao implements BillDao {
 
     @Override
     public boolean create(Bill entity) {
-        return false;
+        try (PreparedStatement ps = connection.prepareStatement(BillQuery.INSERT)) {
+            ps.setTimestamp(1, null);
+            ps.setInt(2, entity.getIdOrder());
+            ps.setInt(3, entity.getAdmin().getId());
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw  new RuntimeException(e);
+        }
     }
 
     @Override
@@ -82,7 +92,14 @@ public class JDBCBillDao implements BillDao {
 
     @Override
     public int update(Bill entity) {
-        return 0;
+        try (PreparedStatement ps = connection.prepareStatement(BillQuery.UPDATE)) {
+            ps.setTimestamp(1, Timestamp.valueOf(entity.getPayment_datetime()));
+            ps.setInt(2, entity.getIdOrder());
+            return ps.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

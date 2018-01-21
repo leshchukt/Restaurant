@@ -4,7 +4,7 @@ import controller.command.Command;
 import controller.command.CommandFactory;
 import model.entity.Menu;
 import model.entity.User;
-import model.service.OrderHasMenuService;
+import model.service.ClientOrderService;
 import model.service.implementation.OrderService;
 import org.apache.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class OrderMealCommand implements Command {
     private List<Menu> menu;
     private User client;
 
-    private OrderHasMenuService orderService = OrderService.getInstance();
+    private ClientOrderService orderService = OrderService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -2,7 +2,7 @@ package controller.command.admin;
 
 import controller.command.Command;
 import model.entity.Order;
-import model.service.ActiveOrdersService;
+import model.service.AdminOrderService;
 import model.service.implementation.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ public class HomeAdminCommand implements Command {
 
     private List<Order> activeOrders;
 
-    private ActiveOrdersService orderService = OrderService.getInstance();
+    private AdminOrderService orderService = OrderService.getInstance();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {

@@ -4,12 +4,12 @@ import model.dao.CategoryDao;
 import model.dao.ConnectionDao;
 import model.dao.DaoFactory;
 import model.entity.Category;
-import model.service.GetCategoryService;
+import model.service.ClientCategoryService;
 
 import java.util.List;
 import java.util.Optional;
 
-public class CategoryService implements GetCategoryService{
+public class CategoryService implements ClientCategoryService {
 
     private DaoFactory daoFactory;
 

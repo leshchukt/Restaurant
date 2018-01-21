@@ -2,7 +2,7 @@ package controller.command.admin;
 
 import controller.command.Command;
 import model.entity.Order;
-import model.service.FullOrderService;
+import model.service.AdminOrderService;
 import model.service.implementation.OrderService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ public class FindOrderCommand implements Command {
     private static String PARAMETER_ORDER = "order.id";
     private static String ATTRIBUTE_CURRENT_ORDER = "currentOrder";
 
-    private FullOrderService orderService = OrderService.getInstance();
+    private AdminOrderService orderService = OrderService.getInstance();
 
     private int idOrder;
     private Order order;

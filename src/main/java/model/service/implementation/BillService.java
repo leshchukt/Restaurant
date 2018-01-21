@@ -15,7 +15,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Optional;
 
-public class BillService implements GetBillsService, PayService, DeclineService, AdminBillService {
+public class BillService implements ClientBillService, DeclineBillService, AcceptBillService {
     private DaoFactory daoFactory;
     private static final Logger LOGGER = Logger.getLogger(BillService.class);
 
