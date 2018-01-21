@@ -12,5 +12,5 @@ public interface ClientOrderService {
     int createOrder(User client, List<Menu> menu);
     List<Menu> getOrderMenu(int idOrder);
     List<Order> getOrdersByClient(User client);
-    List<Order> getLimitedOrders(int start, int end);
+    List<Order> getLimitedOrders(int start, int total);
 }

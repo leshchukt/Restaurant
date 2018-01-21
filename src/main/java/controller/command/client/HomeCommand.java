@@ -53,12 +53,12 @@ public class HomeCommand implements Command {
         size *= ordersForCount.size();
 
         if (size % total == 0) {
-            request.setAttribute("countOfOrders", (size / total));
+            request.setAttribute("countOfOrders", size / total);
         } else {
-            request.setAttribute("countOfOrders", (size / total)+1);
+            request.setAttribute("countOfOrders", size / total + 1);
         }
 
-        return orderService.getLimitedOrders(idPage, total);
+        return orderService.getLimitedOrders(idPage - 1, total);
     }
 
     private void initCommand(HttpServletRequest request) {
