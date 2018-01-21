@@ -35,7 +35,8 @@
 
 <c:forEach var="bill" items="${requestScope.userBills}" >
     <div class="information-box">
-        <h1><fmt:message key="bill.order" bundle="${resourceBundle}"/>${bill.order.timeOfOrder}</h1>
+        <h2><fmt:message key="bill.order" bundle="${resourceBundle}"/>
+            <ct:dateTime dateTime="${bill.order.timeOfOrder}"/></h2>
         <p><fmt:message key="bill.price" bundle="${resourceBundle}"/><ct:price price="${bill.price}"/></p>
         <p><fmt:message key="bill.admin" bundle="${resourceBundle}"/>${bill.admin.nickname}</p>
         <form action="/restaurant/client/show_order" method="post" class="button-forms">

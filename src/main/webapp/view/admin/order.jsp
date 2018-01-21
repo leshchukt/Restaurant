@@ -34,7 +34,8 @@
     <h2><fmt:message key="admin.client.information" bundle="${resourceBundle}"/></h2>
     <p2><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.currentOrder.client.nickname}</p2>
     <br>
-    <p2><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>${sessionScope.currentOrder.client.birthDate}</p2>
+    <p2><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>
+        <ct:date date="${sessionScope.currentOrder.client.birthDate}"/></p2>
 </div>
 
 <c:forEach items="${sessionScope.currentOrder.menu}" var="meal">

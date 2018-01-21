@@ -18,28 +18,18 @@ public class BillMapper implements EntityMapper<Bill> {
     public List<Bill> extractListFromResultSet(ResultSet resultSet) throws SQLException {
         List<Bill> bills = new ArrayList<>();
 
-        Map<Integer, Bill> billMap = new HashMap<>();
         Map<Integer, User> userMap = new HashMap<>();
-        Map<Integer, Order> orderMap = new HashMap<>();
 
         EntityMapper<User> userMapper = new UserMapper();
-        EntityMapper<Order> orderMapper = new OrderMapper();
 
         while ( resultSet.next() ){
             User user = userMapper.makeUnique(
                     userMap,
                     userMapper.extractFromResultSet(resultSet)
             );
-            Order order = orderMapper.makeUnique(
-                    orderMap,
-                    orderMapper.extractFromResultSet(resultSet)
-            );
-            Bill bill = makeUnique(
-                    billMap,
-                    extractFromResultSet(resultSet)
-            );
+            Bill bill = extractFromResultSet(resultSet);
+
             bill.setAdmin(user);
-            bill.setOrder(order);
             bills.add(bill);
         }
         return bills;

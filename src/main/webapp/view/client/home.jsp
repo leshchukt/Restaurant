@@ -30,7 +30,8 @@
 <div>
     <h3 style="text-align: center"><fmt:message key="client.home.information" bundle="${resourceBundle}"/></h3>
     <p><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.user.nickname}</p>
-    <p><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>${sessionScope.user.birthDate}</p>
+    <p><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>
+        <ct:date date="${sessionScope.user.birthDate}"/></p>
 </div>
 
 <c:if test="${not empty requestScope.message}">
@@ -50,15 +51,20 @@
             <th><fmt:message key="meal.amount" bundle="${resourceBundle}"/></th>
             <th><fmt:message key="meal.price" bundle="${resourceBundle}"/></th>
         </tr>
+        <c:set var = "orderPrice" value = "${0}"/>
         <c:forEach var="meal" items="${requestScope.orderMeals}">
             <tr>
                 <td><c:out value="${meal.title}"/></td>
                 <td><c:out value="${meal.category.name}"/></td>
                 <td><c:out value="${meal.amount}"/></td>
-                <td><ctg:price price="${meal.price}"/></td>
+                <td><ct:price price="${meal.price}"/></td>
             </tr>
+            <c:set var="orderPrice" value="${orderPrice + meal.amount * meal.price}"/>
         </c:forEach>
     </table>
+    <p style="font-size: 16px">
+        <fmt:message key="order.price" bundle="${resourceBundle}"/><ct:price price="${orderPrice}"/>
+    </p>
 </div>
 
 <div class="information-box"
@@ -69,7 +75,7 @@
     <c:forEach var="order" items="${requestScope.ordersHistory}">
         <div class="information-box">
             <fmt:message key="order.time" bundle="${resourceBundle}"/>
-            <c:out value=": ${order.timeOfOrder}"/>
+            <ct:dateTime dateTime="${order.timeOfOrder}"/>
             <br>
             <fmt:message key="order.done" bundle="${resourceBundle}"/>
             <c:choose>

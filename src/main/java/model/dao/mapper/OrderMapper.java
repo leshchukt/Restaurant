@@ -14,9 +14,9 @@ public class OrderMapper implements EntityMapper<Order>{
 
     @Override
     public List<Order> extractListFromResultSet(ResultSet resultSet) throws SQLException {
-        List<Order> orders = new ArrayList<>();
 
-        Map<Integer,Order> orderMap = new HashMap<>();
+        List<Order> orders = new ArrayList<>();
+        /*
         Map<Integer,Menu> menuMap = new HashMap<>();
 
         EntityMapper<Menu> menuMapper = new MenuMapper();
@@ -29,6 +29,11 @@ public class OrderMapper implements EntityMapper<Order>{
             orders.add(order);
         }
 
+        return orders;
+        */
+        while (resultSet.next()) {
+            orders.add(extractFromResultSet(resultSet));
+        }
         return orders;
     }
 

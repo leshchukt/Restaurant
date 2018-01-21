@@ -36,8 +36,12 @@ public class JDBCMenuDao implements MenuDao {
         try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ID)){
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
+
             if (resultSet.next()) {
-                return Optional.of(menuMapper.extractFromResultSet(resultSet));
+                Category category = new CategoryMapper().extractFromResultSet(resultSet);
+                Menu menu = menuMapper.extractFromResultSet(resultSet);
+                menu.setCategory(category);
+                return Optional.of(menu);
             } else return Optional.empty();
         } catch (SQLException e) {
             LOGGER.error(e);

@@ -45,7 +45,6 @@ public class JDBCBillDao implements BillDao {
         try (PreparedStatement ps
                      = connection.prepareStatement(BillQuery.SELECT_BY_CLIENT)){
             ps.setInt(1, client.getId());
-
             ResultSet resultSet = ps.executeQuery();
 
             return billMapper.extractListFromResultSet(resultSet);

@@ -10,7 +10,6 @@ public interface Command {
     String ADMIN_PAGE = "/view/admin/home.jsp";
     String CLIENT_PAGE = "/view/client/home.jsp";
     String ERROR_404 = "/view/error/error404.jsp";
-    String ERROR_500 = "/view/error/error500.jsp";
     String CLIENT_MENU_PAGE = "/view/client/menu.jsp";
     String CLIENT_ORDER_PAGE = "/view/client/order.jsp";
     String CLIENT_BILLS_PAGE = "/view/client/bills.jsp";

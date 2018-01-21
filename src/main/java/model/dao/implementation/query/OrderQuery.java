@@ -9,10 +9,8 @@ public interface OrderQuery {
             "WHERE `order`.idorder = order_has_menu.idorder " +
             "AND order_has_menu.idmenu = menu.idmenu " +
             "AND `order`.idorder = ?";
-    String SELECT_BY_CLIENT = "SELECT * FROM `order` JOIN order_has_menu JOIN menu " +
-            "WHERE `order`.idorder = order_has_menu.idorder " +
-            "AND order_has_menu.idmenu = menu.idmenu " +
-            "AND idclient = ? " +
+    String SELECT_BY_CLIENT = "SELECT * FROM `order` " +
+            "WHERE idclient = ? " +
             "ORDER BY time_of_order DESC";
 
     String UPDATE = "UPDATE `order` SET idclient = ?, time_of_order = ?, accepted = ? WHERE idorder = ?";

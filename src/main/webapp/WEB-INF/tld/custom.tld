@@ -10,6 +10,28 @@
     <uri>custom_tags</uri>
 
     <tag>
+        <name>date</name>
+        <tag-class>model.tag.DateTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>date</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
+        <name>dateTime</name>
+        <tag-class>model.tag.DateTimeTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>dateTime</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+
+    <tag>
         <name>price</name>
         <tag-class>model.tag.PriceTag</tag-class>
         <body-content>empty</body-content>

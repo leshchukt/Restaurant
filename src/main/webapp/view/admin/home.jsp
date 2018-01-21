@@ -33,10 +33,7 @@
 <c:forEach var="order" items="${requestScope.activeOrders}">
     <div class="information-box">
         <fmt:message key="order.time" bundle="${resourceBundle}"/>
-        <c:out value=": ${order.timeOfOrder}"/>
-        <br>
-        <br>
-        <br>
+        <ct:dateTime dateTime="${order.timeOfOrder}"/>
         <form action="/restaurant/admin/order" method="post">
             <input type="hidden" name="order.id" value="${order.id}">
             <button class="button-green">

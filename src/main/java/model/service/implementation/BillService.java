@@ -23,10 +23,6 @@ public class BillService implements ClientBillService, DeclineBillService, Accep
         daoFactory = DaoFactory.getInstance();
     }
 
-    public List<Bill> getBills(User client) {
-        return null;
-    }
-
     @Override
     public void declineOrder(int idOrder) {
         try(ConnectionDao connectionDao = daoFactory.getConnectionDao()){
