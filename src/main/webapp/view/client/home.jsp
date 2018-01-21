@@ -107,6 +107,9 @@
 
         </div>
     </c:forEach>
+    <c:forEach begin="1" end="${requestScope.countOfOrders}" varStatus="loop">
+        <a href="/restaurant/client/home/?page=${loop.index}">${loop.index}</a>
+    </c:forEach>
 </div>
 </body>
 </html>

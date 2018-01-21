@@ -64,6 +64,21 @@ public class JDBCOrderDao implements OrderDao {
         }
     }
 
+    @Override
+    public List<Order> getWithLimit(int start, int end) {
+        try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_WITH_LIMIT)){
+            ps.setInt(1, start);
+            ps.setInt(2, end);
+            ResultSet resultSet = ps.executeQuery();
+
+            return orderMapper.extractListFromResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
+
+    }
+
     private boolean insertIntoOrderHasMenu(Order entity) throws SQLException{
         for(Menu menuItem : entity.getMenu()){
             PreparedStatement statement = connection.prepareStatement(OrderQuery.INSERT_ORDER_HAS_MENU);

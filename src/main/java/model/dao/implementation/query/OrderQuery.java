@@ -12,6 +12,7 @@ public interface OrderQuery {
     String SELECT_BY_CLIENT = "SELECT * FROM `order` " +
             "WHERE idclient = ? " +
             "ORDER BY time_of_order DESC";
+    String SELECT_WITH_LIMIT = "SELECT * FROM `order` LIMIT ?, ?";
 
     String UPDATE = "UPDATE `order` SET idclient = ?, time_of_order = ?, accepted = ? WHERE idorder = ?";
 }

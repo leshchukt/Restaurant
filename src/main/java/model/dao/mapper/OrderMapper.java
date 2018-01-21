@@ -16,21 +16,7 @@ public class OrderMapper implements EntityMapper<Order>{
     public List<Order> extractListFromResultSet(ResultSet resultSet) throws SQLException {
 
         List<Order> orders = new ArrayList<>();
-        /*
-        Map<Integer,Menu> menuMap = new HashMap<>();
 
-        EntityMapper<Menu> menuMapper = new MenuMapper();
-
-        while (resultSet.next()) {
-            Order order = makeUnique(orderMap, extractFromResultSet(resultSet));
-            Menu menu = menuMapper.makeUnique(menuMap, menuMapper.extractFromResultSet(resultSet));
-            menu.setAmount(resultSet.getInt(ColumnLabel.AMOUNT));
-            order.addMenuItem(menu);
-            orders.add(order);
-        }
-
-        return orders;
-        */
         while (resultSet.next()) {
             orders.add(extractFromResultSet(resultSet));
         }

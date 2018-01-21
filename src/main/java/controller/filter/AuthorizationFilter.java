@@ -31,6 +31,7 @@ public class AuthorizationFilter implements Filter {
         // subscriber URIs
         clientURI.add(GET_ORDER_MEALS);
         clientURI.add(CLIENT_HOME);
+        clientURI.add(CLIENT_HOME_PAGINATION);
         clientURI.add(MENU_SEARCH);
         clientURI.add(ADD_MEAL_TO_ORDER);
         clientURI.add(REMOVE_MEAL_FROM_ORDER);

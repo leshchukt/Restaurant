@@ -38,6 +38,14 @@ public class OrderService implements ClientOrderService, AdminOrderService {
     }
 
     @Override
+    public List<Order> getLimitedOrders(int start, int end) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            return orderDao.getWithLimit(start, end);
+        }
+    }
+
+    @Override
     public List<Menu> getOrderMenu(int idOrder){
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             OrderDao orderDao = daoFactory.createOrderDao(connectionDao);

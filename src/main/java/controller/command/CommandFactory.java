@@ -17,6 +17,7 @@ public class CommandFactory {
 
     public static final String MENU_SEARCH = "/restaurant/client/menu";
     public static final String CLIENT_HOME = "/restaurant/client/home";
+    public static final String CLIENT_HOME_PAGINATION = "/restaurant/client/home/";
     public static final String GET_ORDER_MEALS = "/restaurant/client/show_order";
     public static final String ADD_MEAL_TO_ORDER = "/restaurant/client/add_meal";
     public static final String REMOVE_MEAL_FROM_ORDER = "/restaurant/client/remove_meal";
@@ -52,6 +53,8 @@ public class CommandFactory {
             case LOGIN_PAGE :
                 return new LoginPageCommand();
             case CLIENT_HOME:
+                return new HomeCommand();
+            case CLIENT_HOME_PAGINATION:
                 return new HomeCommand();
             case MENU_SEARCH:
                 return new SearchMenuCommand();
