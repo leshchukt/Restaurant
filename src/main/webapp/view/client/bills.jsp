@@ -37,8 +37,8 @@
     <div class="information-box">
         <h2><fmt:message key="bill.order" bundle="${resourceBundle}"/>
             <ct:dateTime dateTime="${bill.order.timeOfOrder}"/></h2>
-        <p><fmt:message key="bill.price" bundle="${resourceBundle}"/><ct:price price="${bill.price}"/></p>
-        <p><fmt:message key="bill.admin" bundle="${resourceBundle}"/>${bill.admin.nickname}</p>
+        <p><fmt:message key="bill.price" bundle="${resourceBundle}"/><ct:price price="${bill.price}"/><br>
+            <fmt:message key="bill.admin" bundle="${resourceBundle}"/>${bill.admin.nickname}</p>
         <form action="/restaurant/client/show_order" method="post" class="button-forms">
             <input type="hidden" name="order.id" value="${bill.order.id}">
             <input type="hidden" name="query" value="get.order.items">
@@ -56,6 +56,10 @@
             </form>
         </c:if>
     </div>
+</c:forEach>
+<br>
+<c:forEach begin="1" end="${requestScope.countOfBills}" varStatus="loop">
+    <a href="/restaurant/client/bills/?page=${loop.index}">${loop.index}</a>
 </c:forEach>
 </body>
 </html>

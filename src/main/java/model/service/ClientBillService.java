@@ -10,4 +10,5 @@ public interface ClientBillService {
 
     List<Bill> getBillsByClient(User client);
     void payTheBill(int idBill);
+    List<Bill> getLimitedBills(User client, int start, int total);
 }

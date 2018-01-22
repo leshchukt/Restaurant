@@ -12,4 +12,5 @@ public interface BillDao extends GenericDao<Bill> {
     boolean create(Bill entity);
 
     List<Bill> findByClient(User client);
+    List<Bill> getWithLimit(User client, int start, int total);
 }

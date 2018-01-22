@@ -55,6 +55,21 @@ public class JDBCBillDao implements BillDao {
     }
 
     @Override
+    public List<Bill> getWithLimit(User client, int start, int total) {
+        try (PreparedStatement ps = connection.prepareStatement(BillQuery.SELECT_WITH_LIMIT)){
+            ps.setInt(1, client.getId());
+            ps.setInt(2, start);
+            ps.setInt(3, total);
+            ResultSet resultSet = ps.executeQuery();
+
+            return billMapper.extractListFromResultSet(resultSet);
+        } catch (SQLException e) {
+            LOGGER.error(e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Optional<Bill> findById(int id) {
         try (PreparedStatement ps
                      = connection.prepareStatement(BillQuery.SELECT_BY_ID)){

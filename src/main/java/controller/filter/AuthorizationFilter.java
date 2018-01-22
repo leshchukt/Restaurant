@@ -38,6 +38,7 @@ public class AuthorizationFilter implements Filter {
         clientURI.add(CREATE_ORDER);
         clientURI.add(CLIENT_ORDER);
         clientURI.add(CLIENT_BILLS);
+        clientURI.add(CLIENT_BILLS_PAGINATION);
         clientURI.add(CLIENT_DECLINE_ORDER);
         clientURI.add(PAY_BILL);
         clientURI.add(LOGOUT);

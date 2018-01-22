@@ -17,17 +17,13 @@
 }
 
 .login_button {
-    background-color: #4CAF50;
-    color: white;
+    color:dimgrey;
+    background: aliceblue;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;
     cursor: pointer;
     width: 40%;
-}
-
-.not_registered_message {
-
 }
 
 .language-box {
@@ -38,43 +34,51 @@
     padding: 6px 10px;
     margin: 8px 0;
     display: inline-block;
-}
-
-* {
-    margin:0;
-    padding: 10px;
+    border: none;
+    background-color: aliceblue;
+    color: dimgrey;
 }
 
 .left-menu {
-    width:210px;
-    margin:15px;
-}
-
-.left-menu ul{
-    list-style:none;
+    width: 20%;
+    height: 100%;
+    margin: 0;
+    float: left;
+    padding: 0;
+    vertical-align: center;
 }
 
 .left-menu li{
-    float: left;
-    list-style:none;
     display:block;
-    line-height:32px;
-    height:64px;
-    margin:7px 5px;
-    width:306px;
-}
-.left-menu li a{
-    display:block;
-    height:33px;
-    text-transform:uppercase;
-    font-size:16px;
-    line-height:32px;
-    padding:0 0 0 25px;
-    text-decoration:none;
+    height:15%;
     color:dimgrey;
     background: aliceblue;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    vertical-align: middle;
 }
+
+.left-menu li a{
+    padding: 5px;
+    text-transform:uppercase;
+    text-align: center;
+    text-underline: none;
+    font-size: 16px;
+    height: 15%;
+    display: block;
+}
+
 .left-menu li a:hover{
     background: whitesmoke;
     color:dimgrey;
+}
+.content {
+    float: right;
+    width: 70%;
+    height: 100%;
+}
+
+* {
+    padding: 5px 5px;
 }

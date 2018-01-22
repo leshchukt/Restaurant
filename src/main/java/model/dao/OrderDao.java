@@ -11,5 +11,5 @@ public interface OrderDao extends GenericDao<Order> {
     boolean create (Order entity);
 
     List<Order> findByClient(User client);
-    List<Order> getWithLimit(int start, int total);
+    List<Order> getWithLimit(User client, int start, int total);
 }

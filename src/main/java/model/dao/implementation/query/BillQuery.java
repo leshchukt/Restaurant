@@ -7,6 +7,10 @@ public interface BillQuery {
     String SELECT_BY_CLIENT = "SELECT * FROM bill JOIN `order` USING (idorder) JOIN user " +
             "WHERE iduser = idadmin AND idclient = ? " +
             "ORDER BY time_of_order DESC";
+    String SELECT_WITH_LIMIT = "SELECT * FROM bill JOIN `order` USING (idorder) JOIN user " +
+            "WHERE iduser = idadmin AND idclient = ? " +
+            "ORDER BY time_of_order DESC " +
+            "LIMIT ?, ?";
 
     String INSERT = "INSERT INTO bill (payment_datetime, idorder, idadmin) VALUES (?, ?, ?)";
 

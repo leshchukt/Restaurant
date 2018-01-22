@@ -38,8 +38,8 @@
         <form action="/restaurant/client/remove_meal" method="post">
             <input type="hidden" name="meal.id" value="${meal.id}">
             <h3><fmt:message key="meal.title" bundle="${resourceBundle}"/>${meal.title}</h3>
-            <p><fmt:message key="meal.category" bundle="${resourceBundle}"/>${meal.category.name}</p>
-            <p><fmt:message key="meal.amount" bundle="${resourceBundle}"/>${meal.amount}</p>
+            <p><fmt:message key="meal.category" bundle="${resourceBundle}"/>${meal.category.name}<br>
+                <fmt:message key="meal.amount" bundle="${resourceBundle}"/>${meal.amount}</p>
             <p><fmt:message key="meal.price" bundle="${resourceBundle}"/><ct:price price="${meal.price}"/><br>
                 <fmt:message key="meal.weight" bundle="${resourceBundle}"/><ct:weight weight="${meal.weight}"/></p>
             <input type="number" min="1" max="${meal.amount}" name="amount" value="${meal.amount}" style="height: 35px;">

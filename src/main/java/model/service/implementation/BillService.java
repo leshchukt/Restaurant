@@ -56,15 +56,13 @@ public class BillService implements ClientBillService, DeclineBillService, Accep
             }
             orderDao.update(order);
 
-            AdminOrderService orderService = OrderService.getInstance();
-            int price = orderService.getSummaryPrice(order);
-
             Bill bill = Bill.builder()
                     .setIdOrder(order.getId())
                     .setAdmin(admin)
                     .setOrder(order)
-                    .setPrice(price)
                     .build();
+
+            addOrderPriceToBill(bill);
 
             BillDao billDao = daoFactory.createBillDao(connectionDao);
 
@@ -99,6 +97,21 @@ public class BillService implements ClientBillService, DeclineBillService, Accep
         }
     }
 
+    @Override
+    public List<Bill> getLimitedBills(User client, int start, int total) {
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+            BillDao billDao = daoFactory.createBillDao(connectionDao);
+            List<Bill> bills = billDao.getWithLimit(client, start, total);
+            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
+            for (Bill bill : bills) {
+                addOrderWithMenuToBill(bill, orderDao);
+                addOrderPriceToBill(bill);
+            }
+
+            return bills;
+        }
+    }
+
     private void addOrderWithMenuToBill(Bill bill, OrderDao orderDao) {
         Optional<Order> order = orderDao.findById(bill.getIdOrder());
         if (order.isPresent()) {
@@ -110,15 +123,7 @@ public class BillService implements ClientBillService, DeclineBillService, Accep
     public List<Bill> getBillsByClient(User client) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             BillDao billDao = daoFactory.createBillDao(connectionDao);
-            List<Bill> bills = billDao.findByClient(client);
-
-            OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
-            for (Bill bill : bills) {
-                addOrderWithMenuToBill(bill, orderDao);
-                addOrderPriceToBill(bill);
-            }
-
-            return bills;
+            return billDao.findByClient(client);
         }
     }
 

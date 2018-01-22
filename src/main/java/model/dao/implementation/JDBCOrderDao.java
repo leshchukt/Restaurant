@@ -65,13 +65,13 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     @Override
-    public List<Order> getWithLimit(int start, int total) {
+    public List<Order> getWithLimit(User client, int start, int total) {
         try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_WITH_LIMIT)){
-            ps.setInt(1, start);
-            ps.setInt(2, total);
-            ResultSet resultSet = ps.executeQuery();
+            ps.setInt(1, client.getId());
+            ps.setInt(2, start);
+            ps.setInt(3, total);
 
-            return orderMapper.extractListFromResultSet(resultSet);
+            return orderMapper.extractListFromResultSet(ps.executeQuery());
         } catch (SQLException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);

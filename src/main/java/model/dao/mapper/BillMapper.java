@@ -33,6 +33,7 @@ public class BillMapper implements EntityMapper<Bill> {
             bills.add(bill);
         }
         return bills;
+
     }
 
     @Override

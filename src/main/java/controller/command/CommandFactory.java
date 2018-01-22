@@ -1,5 +1,6 @@
 package controller.command;
 
+import com.sun.org.apache.bcel.internal.generic.RET;
 import controller.command.admin.*;
 import controller.command.client.*;
 import controller.command.guest.*;
@@ -25,6 +26,7 @@ public class CommandFactory {
     public static final String CLIENT_ORDER = "/restaurant/client/order";
     public static final String CLIENT_DECLINE_ORDER = "/restaurant/client/decline_order";
     public static final String CLIENT_BILLS = "/restaurant/client/bills";
+    public static final String CLIENT_BILLS_PAGINATION = "/restaurant/client/bills/";
     public static final String PAY_BILL = "/restaurant/client/pay";
 
 
@@ -73,6 +75,8 @@ public class CommandFactory {
             case CREATE_ORDER:
                 return new CreateOrderCommand();
             case CLIENT_BILLS:
+                return new GetBillsCommand();
+            case CLIENT_BILLS_PAGINATION:
                 return new GetBillsCommand();
             case PAY_BILL:
                 return new PayTheBillCommand();

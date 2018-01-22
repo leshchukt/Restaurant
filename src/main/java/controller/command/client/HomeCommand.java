@@ -16,7 +16,7 @@ public class HomeCommand implements Command {
 
     private static String ATTRIBUTE_CLIENT_ORDERS = "ordersHistory";
     private static String ATTRIBUTE_USER = "user";
-    private static String ATTRIBUTE_PAGE = "page";
+    private static String PARAMETER_PAGE = "page";
 
     private ClientOrderService orderService = OrderService.getInstance();
 
@@ -58,11 +58,11 @@ public class HomeCommand implements Command {
             request.setAttribute("countOfOrders", size / total + 1);
         }
 
-        return orderService.getLimitedOrders(idPage - 1, total);
+        return orderService.getLimitedOrders(client, idPage - 1, total);
     }
 
     private void initCommand(HttpServletRequest request) {
-        page = request.getParameter(ATTRIBUTE_PAGE);
+        page = request.getParameter(PARAMETER_PAGE);
         client = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
     }
 }

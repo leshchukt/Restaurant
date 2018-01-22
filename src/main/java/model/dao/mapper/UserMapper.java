@@ -5,6 +5,7 @@ import model.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 public class UserMapper implements EntityMapper<User> {
@@ -24,5 +25,10 @@ public class UserMapper implements EntityMapper<User> {
         int key = entity.getId();
         map.putIfAbsent(key, entity);
         return map.get(key);
+    }
+
+    @Override
+    public List<User> extractListFromResultSet(ResultSet resultSet) throws SQLException {
+        return null;
     }
 }

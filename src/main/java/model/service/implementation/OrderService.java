@@ -38,10 +38,10 @@ public class OrderService implements ClientOrderService, AdminOrderService {
     }
 
     @Override
-    public List<Order> getLimitedOrders(int start, int total) {
+    public List<Order> getLimitedOrders(User client, int start, int total) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             OrderDao orderDao = daoFactory.createOrderDao(connectionDao);
-            return orderDao.getWithLimit(start, total);
+            return orderDao.getWithLimit(client, start, total);
         }
     }
 
@@ -84,18 +84,6 @@ public class OrderService implements ClientOrderService, AdminOrderService {
             return order.getId();
         }
 
-    }
-
-    @Override
-    public int getSummaryPrice(Order order){
-        if(order.getMenu() == null){
-            order.setMenu(getOrderMenu(order.getId()));
-        }
-        int result = 0;
-        for(Menu menuItem : order.getMenu()){
-            result += menuItem.getPrice() * menuItem.getAmount();
-        }
-        return result;
     }
 
     @Override

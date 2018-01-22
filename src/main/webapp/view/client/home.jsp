@@ -27,13 +27,13 @@
         <li><a href="/restaurant/logout"><fmt:message key="logout.page" bundle="${resourceBundle}"/></a></li>
     </ul>
 </div>
+<div class="content">
 <div>
     <h3 style="text-align: center"><fmt:message key="client.home.information" bundle="${resourceBundle}"/></h3>
-    <p><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.user.nickname}</p>
-    <p><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>
+    <p><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.user.nickname}<br>
+        <fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>
         <ct:date date="${sessionScope.user.birthDate}"/></p>
 </div>
-
 <c:if test="${not empty requestScope.message}">
     <div style="text-align: center">
         <p><fmt:message key="${requestScope.message}" bundle="${resourceBundle}"/></p>
@@ -62,7 +62,7 @@
             <c:set var="orderPrice" value="${orderPrice + meal.amount * meal.price}"/>
         </c:forEach>
     </table>
-    <p style="font-size: 16px">
+    <p style="font-size: 18px">
         <fmt:message key="order.price" bundle="${resourceBundle}"/><ct:price price="${orderPrice}"/>
     </p>
 </div>
@@ -74,10 +74,9 @@
 <h2><fmt:message key="client.home.history" bundle="${resourceBundle}"/></h2>
     <c:forEach var="order" items="${requestScope.ordersHistory}">
         <div class="information-box">
-            <fmt:message key="order.time" bundle="${resourceBundle}"/>
-            <ct:dateTime dateTime="${order.timeOfOrder}"/>
-            <br>
-            <fmt:message key="order.done" bundle="${resourceBundle}"/>
+            <b><fmt:message key="order.time" bundle="${resourceBundle}"/></b>
+            <ct:dateTime dateTime="${order.timeOfOrder}"/><br>
+            <b><fmt:message key="order.done" bundle="${resourceBundle}"/></b>
             <c:choose>
                 <c:when test="${order.accepted == 0}">
                     <fmt:message key="order.status.in.process" bundle="${resourceBundle}"/>
@@ -89,10 +88,10 @@
                     <fmt:message key="order.status.declined" bundle="${resourceBundle}"/>
                 </c:when>
             </c:choose>
-            <br>
+            <div style="float: right">
             <form action="/restaurant/client/show_order" method="post" class="button-forms">
                 <input type="hidden" name="order.id" value="${order.id}">
-                <button class="button-green">
+                <button>
                     <fmt:message key="button.show" bundle="${resourceBundle}"/>
                 </button>
             </form>
@@ -104,12 +103,15 @@
                     </button>
                 </form>
             </c:if>
-
+            </div>
         </div>
+        <br><br><br>
     </c:forEach>
+    <br>
     <c:forEach begin="1" end="${requestScope.countOfOrders}" varStatus="loop">
         <a href="/restaurant/client/home/?page=${loop.index}">${loop.index}</a>
     </c:forEach>
+</div>
 </div>
 </body>
 </html>
