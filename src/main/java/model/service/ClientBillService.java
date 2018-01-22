@@ -9,6 +9,8 @@ public interface ClientBillService {
     String NO_ID_EXCEPTION_MESSAGE = "No such id in database";
 
     List<Bill> getBillsByClient(User client);
+
     void payTheBill(int idBill);
+
     List<Bill> getLimitedBills(User client, int start, int total);
 }

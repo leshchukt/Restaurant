@@ -2,8 +2,6 @@ package model.entity;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Order {
@@ -16,10 +14,19 @@ public class Order {
 
     private double price;
 
-    private Order(){}
+    private Order() {
+    }
+
+    public static Builder builder() {
+        return new Order().new Builder();
+    }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDateTime getTimeOfOrder() {
@@ -30,12 +37,24 @@ public class Order {
         return accepted;
     }
 
+    public void setAccepted(int accepted) {
+        this.accepted = accepted;
+    }
+
     public User getClient() {
         return client;
     }
 
+    public void setClient(User client) {
+        this.client = client;
+    }
+
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getIdClient() {
@@ -46,14 +65,6 @@ public class Order {
         return menu;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public void setMenu(List<Menu> menu) {
         this.menu = menu;
     }
@@ -62,22 +73,11 @@ public class Order {
         menu.add(menuItem);
     }
 
-    public static Builder builder() {
-        return new Order().new Builder();
-    }
-
-    public void setAccepted(int accepted) {
-        this.accepted = accepted;
-    }
-
-    public void setClient(User client) {
-        this.client = client;
-    }
-
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Order build(){
+        public Order build() {
             return Order.this;
         }
 

@@ -5,14 +5,12 @@ import org.apache.log4j.Logger;
 
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.sql.Connection;
 import java.sql.SQLException;
 
 public class JDBCDaoFactory extends DaoFactory {
 
-    private DataSource dataSource;
-
     private static final Logger LOGGER = Logger.getLogger(JDBCDaoFactory.class);
+    private DataSource dataSource;
 
     public JDBCDaoFactory() {
         try {

@@ -16,16 +16,16 @@ public class JDBCConnection implements ConnectionDao {
         this.connection = connection;
     }
 
-    Connection getConnection(){
+    Connection getConnection() {
         return connection;
     }
 
     @Override
     public void beginTransaction() {
-        try{
+        try {
             connection.setAutoCommit(false);
             transactionUncommitted = true;
-        } catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error("Error during transaction beginning: ", e);
             throw new RuntimeException(e);
         }
@@ -44,7 +44,7 @@ public class JDBCConnection implements ConnectionDao {
 
     @Override
     public void rollbackTransaction() {
-        try{
+        try {
             connection.rollback();
             transactionUncommitted = false;
         } catch (SQLException e) {
@@ -55,7 +55,7 @@ public class JDBCConnection implements ConnectionDao {
 
     @Override
     public void close() {
-        if(transactionUncommitted) {
+        if (transactionUncommitted) {
             rollbackTransaction();
         }
         try {

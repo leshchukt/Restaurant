@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddMealToOrderCommand implements Command{
+public class AddMealToOrderCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(AddMealToOrderCommand.class);
 
     private static String PARAMETER_MENU_ITEM = "meal.id";
@@ -50,7 +50,7 @@ public class AddMealToOrderCommand implements Command{
     private void initCommand(HttpServletRequest request) {
         idMenu = Integer.parseInt(request.getParameter(PARAMETER_MENU_ITEM));
         amount = Integer.parseInt(request.getParameter(PARAMETER_AMOUNT));
-        client = (User)request.getSession().getAttribute(ATTRIBUTE_USER);
+        client = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
         menu = getCurrentOrderMeals(request.getSession());
     }
 
@@ -58,7 +58,7 @@ public class AddMealToOrderCommand implements Command{
     private List<Menu> getCurrentOrderMeals(HttpSession session) {
 
         List<Menu> currentOrderMeals = (List<Menu>) session.getAttribute(ATTRIBUTE_ORDER_MENU);
-        if(currentOrderMeals == null){
+        if (currentOrderMeals == null) {
             currentOrderMeals = new ArrayList<>();
         }
         return currentOrderMeals;

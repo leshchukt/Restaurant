@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class PayTheBillCommand implements Command{
+public class PayTheBillCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(PayTheBillCommand.class);
 
     private static final String PARAMETER_BILL = "bill.id";
@@ -42,6 +42,6 @@ public class PayTheBillCommand implements Command{
 
     private void initCommand(HttpServletRequest request) {
         idBill = Integer.parseInt(request.getParameter(PARAMETER_BILL));
-        client = (User)request.getSession().getAttribute(ATTRIBUTE_USER);
+        client = (User) request.getSession().getAttribute(ATTRIBUTE_USER);
     }
 }

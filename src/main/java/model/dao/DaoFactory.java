@@ -8,18 +8,10 @@ public abstract class DaoFactory {
     private static final Logger LOGGER = Logger.getLogger(DaoFactory.class);
     private static DaoFactory daoFactory;
 
-    public abstract ConnectionDao getConnectionDao();
-    public abstract BillDao createBillDao(ConnectionDao connectionDao);
-    public abstract CategoryDao createCategoryDao(ConnectionDao connectionDao);
-    public abstract LoginDao createLoginDao(ConnectionDao connectionDao);
-    public abstract MenuDao createMenuDao(ConnectionDao connectionDao);
-    public abstract OrderDao createOrderDao(ConnectionDao connectionDao);
-    public abstract UserDao createUserDao(ConnectionDao connectionDao);
-
-    public static DaoFactory getInstance(){
-        if( daoFactory == null ){
-            synchronized (DaoFactory.class){
-                if(daoFactory==null){
+    public static DaoFactory getInstance() {
+        if (daoFactory == null) {
+            synchronized (DaoFactory.class) {
+                if (daoFactory == null) {
                     try {
                         daoFactory = (DaoFactory) Class.forName(Configuration.getInstance().getFactoryClass()).newInstance();
                     } catch (Exception e) {
@@ -31,5 +23,19 @@ public abstract class DaoFactory {
         }
         return daoFactory;
     }
+
+    public abstract ConnectionDao getConnectionDao();
+
+    public abstract BillDao createBillDao(ConnectionDao connectionDao);
+
+    public abstract CategoryDao createCategoryDao(ConnectionDao connectionDao);
+
+    public abstract LoginDao createLoginDao(ConnectionDao connectionDao);
+
+    public abstract MenuDao createMenuDao(ConnectionDao connectionDao);
+
+    public abstract OrderDao createOrderDao(ConnectionDao connectionDao);
+
+    public abstract UserDao createUserDao(ConnectionDao connectionDao);
 }
 

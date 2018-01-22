@@ -11,9 +11,9 @@ public class LogoutCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         Enumeration<String> attributes = request.getSession().getAttributeNames();
-        for(; attributes.hasMoreElements(); ){
+        for (; attributes.hasMoreElements(); ) {
             String attribute = attributes.nextElement();
-            if(!attribute.equals("locale")){
+            if (!attribute.equals("locale")) {
                 request.getSession().setAttribute(attribute, null);
             }
         }

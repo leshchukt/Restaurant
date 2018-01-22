@@ -10,7 +10,10 @@ public interface ClientOrderService {
     String NO_ID_EXCEPTION_MESSAGE = "No such id in database";
 
     int createOrder(User client, List<Menu> menu);
+
     List<Menu> getOrderMenu(int idOrder);
+
     List<Order> getOrdersByClient(User client);
+
     List<Order> getLimitedOrders(User client, int start, int total);
 }

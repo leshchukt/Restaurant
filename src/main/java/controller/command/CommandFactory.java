@@ -1,7 +1,9 @@
 package controller.command;
 
-import com.sun.org.apache.bcel.internal.generic.RET;
-import controller.command.admin.*;
+import controller.command.admin.AcceptOrderCommand;
+import controller.command.admin.DeclineOrderAdminCommand;
+import controller.command.admin.FindOrderCommand;
+import controller.command.admin.HomeAdminCommand;
 import controller.command.client.*;
 import controller.command.guest.*;
 import org.apache.log4j.Logger;
@@ -37,22 +39,22 @@ public class CommandFactory {
 
     private static final Logger LOGGER = Logger.getLogger(CommandFactory.class);
 
-    public static Command create(String uri){
+    public static Command create(String uri) {
 
-        if(uri == null){
+        if (uri == null) {
             uri = LOGIN_PAGE;
         }
 
         LOGGER.info("Creating command for uri: " + uri);
 
-        switch (uri){
-            case SET_LOCALE :
+        switch (uri) {
+            case SET_LOCALE:
                 return new SetLocaleCommand();
-            case REGISTRATION :
+            case REGISTRATION:
                 return new RegistrationCommand();
-            case LOGIN :
+            case LOGIN:
                 return new LoginCommand();
-            case LOGIN_PAGE :
+            case LOGIN_PAGE:
                 return new LoginPageCommand();
             case CLIENT_HOME:
                 return new HomeCommand();

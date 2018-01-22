@@ -8,7 +8,12 @@ public class Menu {
     private Category category;
     private int amount = 1;
 
-    private Menu(){}
+    private Menu() {
+    }
+
+    public static Builder builder() {
+        return new Menu().new Builder();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -22,13 +27,17 @@ public class Menu {
             return false;
         }
         Menu object = (Menu) obj;
-        return (id == object.getId());
+        return (id == object.getId()
+                && title.equals(object.getTitle())
+                && Math.abs(price - object.getPrice()) < 1e-6
+                && weight == object.weight
+                && category.getId() == object.getCategory().getId());
     }
 
     @Override
     public int hashCode() {
         int hashCode = 17 * id + title.hashCode();
-        hashCode = 17 * hashCode + (int)price;
+        hashCode = 17 * hashCode + (int) price;
         hashCode = 17 * hashCode + weight;
         return hashCode;
     }
@@ -53,30 +62,27 @@ public class Menu {
         return category;
     }
 
-    public int getAmount() {
-        return amount;
-    }
-
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
-    public static Builder builder(){
-        return new Menu().new Builder();
-    }
-
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Menu build(){
+        public Menu build() {
             return Menu.this;
         }
 
-        public Builder setId(int id){
+        public Builder setId(int id) {
             Menu.this.id = id;
             return this;
         }

@@ -35,8 +35,7 @@ public class AcceptOrderCommand implements Command {
 
             LOGGER.info("Admin: " + admin.getId() + " accepted order: " + order.getId());
             request.setAttribute(ATTRIBUTE_MESSAGE, ORDER_ACCEPTED_MESSAGE);
-        }
-        catch (ConcurrentProcessingException e){
+        } catch (ConcurrentProcessingException e) {
             request.setAttribute(ATTRIBUTE_MESSAGE, "error.concurrency.processed");
         }
         return REDIRECT_PAGE;

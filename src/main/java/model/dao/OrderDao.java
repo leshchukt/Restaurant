@@ -8,8 +8,9 @@ import java.util.List;
 public interface OrderDao extends GenericDao<Order> {
 
     @Override
-    boolean create (Order entity);
+    boolean create(Order entity);
 
     List<Order> findByClient(User client);
+
     List<Order> getWithLimit(User client, int start, int total);
 }

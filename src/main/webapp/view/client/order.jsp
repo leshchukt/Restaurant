@@ -22,8 +22,10 @@
     <ul>
         <li><a href="/restaurant/client/home"><fmt:message key="client.home.page" bundle="${resourceBundle}"/></a></li>
         <li><a href="/restaurant/client/menu"><fmt:message key="client.menu.page" bundle="${resourceBundle}"/></a></li>
-        <li><a href="/restaurant/client/order"><fmt:message key="client.order.page" bundle="${resourceBundle}"/></a></li>
-        <li><a href="/restaurant/client/bills"><fmt:message key="client.bills.page" bundle="${resourceBundle}"/></a></li>
+        <li><a href="/restaurant/client/order"><fmt:message key="client.order.page" bundle="${resourceBundle}"/></a>
+        </li>
+        <li><a href="/restaurant/client/bills"><fmt:message key="client.bills.page" bundle="${resourceBundle}"/></a>
+        </li>
         <li><a href="/restaurant/logout"><fmt:message key="logout.page" bundle="${resourceBundle}"/></a></li>
     </ul>
 </div>
@@ -42,7 +44,8 @@
                 <fmt:message key="meal.amount" bundle="${resourceBundle}"/>${meal.amount}</p>
             <p><fmt:message key="meal.price" bundle="${resourceBundle}"/><ct:price price="${meal.price}"/><br>
                 <fmt:message key="meal.weight" bundle="${resourceBundle}"/><ct:weight weight="${meal.weight}"/></p>
-            <input type="number" min="1" max="${meal.amount}" name="amount" value="${meal.amount}" style="height: 35px;">
+            <input type="number" min="1" max="${meal.amount}" name="amount" value="${meal.amount}"
+                   style="height: 35px;">
             <button class="button-red"><fmt:message key="menu.remove" bundle="${resourceBundle}"/></button>
         </form>
     </div>

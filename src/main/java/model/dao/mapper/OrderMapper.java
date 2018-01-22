@@ -1,16 +1,14 @@
 package model.dao.mapper;
 
-import model.entity.Menu;
 import model.entity.Order;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class OrderMapper implements EntityMapper<Order>{
+public class OrderMapper implements EntityMapper<Order> {
 
     @Override
     public List<Order> extractListFromResultSet(ResultSet resultSet) throws SQLException {

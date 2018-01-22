@@ -31,17 +31,15 @@ public class LoginCommand implements Command {
         initCommand(request);
 
         Optional<User> user = loginService.getUser(email, password);
-        if(user.isPresent()){
+        if (user.isPresent()) {
             LOGGER.info("User " + user.get().getId() + " logged in.");
             request.getSession().setAttribute(USER_ATTRIBUTE, user.get());
-            if(user.get().getRole().equals(Role.ADMIN)){
+            if (user.get().getRole().equals(Role.ADMIN)) {
                 return "redirect:" + CommandFactory.ADMIN_HOME;
-            }
-            else{
+            } else {
                 return "redirect:" + CommandFactory.CLIENT_HOME;
             }
-        }
-        else{
+        } else {
             LOGGER.info("Invalid attempt to log in.");
             request.setAttribute(ERROR_ATTRIBUTE, "error.login");
             return LOG_IN_PAGE;

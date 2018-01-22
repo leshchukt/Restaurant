@@ -2,8 +2,10 @@ package model.dao.implementation;
 
 import model.dao.OrderDao;
 import model.dao.implementation.query.OrderQuery;
-import model.dao.mapper.*;
-import model.entity.Category;
+import model.dao.mapper.ColumnLabel;
+import model.dao.mapper.EntityMapper;
+import model.dao.mapper.MenuMapper;
+import model.dao.mapper.OrderMapper;
 import model.entity.Menu;
 import model.entity.Order;
 import model.entity.User;
@@ -33,27 +35,25 @@ public class JDBCOrderDao implements OrderDao {
             ps.setInt(3, entity.getClient().getId());
             ps.executeUpdate();
             ResultSet resultSet = ps.getGeneratedKeys();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 entity.setId(resultSet.getInt(1));
-                if(insertIntoOrderHasMenu(entity)){
+                if (insertIntoOrderHasMenu(entity)) {
                     connection.commit();
                     return true;
-                }
-                else {
+                } else {
                     connection.rollback();
                     return false;
                 }
-            }
-            else return false;
+            } else return false;
         } catch (SQLException e) {
             LOGGER.error(e);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public List<Order> findByClient(User client) {
-        try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_BY_CLIENT)){
+        try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_BY_CLIENT)) {
             ps.setInt(1, client.getId());
             ResultSet resultSet = ps.executeQuery();
 
@@ -66,7 +66,7 @@ public class JDBCOrderDao implements OrderDao {
 
     @Override
     public List<Order> getWithLimit(User client, int start, int total) {
-        try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_WITH_LIMIT)){
+        try (PreparedStatement ps = connection.prepareStatement(OrderQuery.SELECT_WITH_LIMIT)) {
             ps.setInt(1, client.getId());
             ps.setInt(2, start);
             ps.setInt(3, total);
@@ -79,8 +79,8 @@ public class JDBCOrderDao implements OrderDao {
 
     }
 
-    private boolean insertIntoOrderHasMenu(Order entity) throws SQLException{
-        for(Menu menuItem : entity.getMenu()){
+    private boolean insertIntoOrderHasMenu(Order entity) throws SQLException {
+        for (Menu menuItem : entity.getMenu()) {
             PreparedStatement statement = connection.prepareStatement(OrderQuery.INSERT_ORDER_HAS_MENU);
             statement.setInt(1, entity.getId());
             statement.setInt(2, menuItem.getId());
@@ -107,7 +107,7 @@ public class JDBCOrderDao implements OrderDao {
     }
 
     private Optional<Order> getOrderWithMenu(ResultSet resultSet) throws SQLException {
-        Map<Integer,Order> orderMap = new HashMap<>();
+        Map<Integer, Order> orderMap = new HashMap<>();
         List<Menu> menu = new ArrayList<>();
         Order order = null;
         while (resultSet.next()) {
@@ -123,7 +123,7 @@ public class JDBCOrderDao implements OrderDao {
     @Override
     public List<Order> findAll() {
         List<Order> orders = new ArrayList<>();
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(OrderQuery.SELECT_ALL);
             while (resultSet.next()) {
                 orders.add(orderMapper.extractFromResultSet(resultSet));
@@ -143,10 +143,9 @@ public class JDBCOrderDao implements OrderDao {
             ps.setInt(3, entity.getAccepted());
             ps.setInt(4, entity.getId());
             return ps.executeUpdate();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 

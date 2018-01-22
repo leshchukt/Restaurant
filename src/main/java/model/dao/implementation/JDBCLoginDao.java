@@ -2,7 +2,6 @@ package model.dao.implementation;
 
 import model.dao.LoginDao;
 import model.dao.implementation.query.LoginQuery;
-import model.dao.implementation.query.UserQuery;
 import model.dao.mapper.EntityMapper;
 import model.dao.mapper.LoginMapper;
 import model.entity.Login;
@@ -10,8 +9,10 @@ import model.exception.EmailAlreadyExistsException;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 public class JDBCLoginDao implements LoginDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCLoginDao.class);
@@ -24,19 +25,18 @@ public class JDBCLoginDao implements LoginDao {
     }
 
     @Override
-    public boolean create(Login entity) throws EmailAlreadyExistsException{
+    public boolean create(Login entity) throws EmailAlreadyExistsException {
         String email = entity.getEmail();
         if (isEmailExist(email)) {
             throw new EmailAlreadyExistsException(email);
         }
         try (PreparedStatement statement = connection
-                .prepareStatement(LoginQuery.INSERT, Statement.RETURN_GENERATED_KEYS)){
+                .prepareStatement(LoginQuery.INSERT, Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, entity.getId());
             statement.setString(2, email);
             statement.setString(3, entity.getPassword());
             return statement.executeUpdate() > 0;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }
@@ -50,7 +50,7 @@ public class JDBCLoginDao implements LoginDao {
 
     @Override
     public Optional<Login> findUser(String email, String password) {
-        try (PreparedStatement ps = connection.prepareStatement(LoginQuery.SELECT_BY_EMAIL_AND_PASSWORD)){
+        try (PreparedStatement ps = connection.prepareStatement(LoginQuery.SELECT_BY_EMAIL_AND_PASSWORD)) {
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet resultSet = ps.executeQuery();
@@ -66,7 +66,7 @@ public class JDBCLoginDao implements LoginDao {
 
     @Override
     public List<Login> findAll() {
-        try (Statement ps = connection.createStatement()){
+        try (Statement ps = connection.createStatement()) {
             ResultSet resultSet = ps.executeQuery(LoginQuery.SELECT_ALL);
             return loginMapper.extractListFromResultSet(resultSet);
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class JDBCLoginDao implements LoginDao {
 
     private Set<String> findAllEmails() {
         Set<String> emails = new HashSet<>();
-        try (Statement ps = connection.createStatement()){
+        try (Statement ps = connection.createStatement()) {
             ResultSet resultSet = ps.executeQuery(LoginQuery.SELECT_ALL_EMAILS);
             while (resultSet.next()) {
                 emails.add(resultSet.getString("email"));

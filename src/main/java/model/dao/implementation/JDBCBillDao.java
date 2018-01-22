@@ -1,21 +1,19 @@
 package model.dao.implementation;
 
-import com.mysql.jdbc.util.ResultSetUtil;
 import model.dao.BillDao;
-import model.dao.ConnectionDao;
 import model.dao.implementation.query.BillQuery;
 import model.dao.mapper.BillMapper;
 import model.dao.mapper.EntityMapper;
 import model.dao.mapper.OrderMapper;
 import model.dao.mapper.UserMapper;
-import model.entity.*;
+import model.entity.Bill;
+import model.entity.Order;
+import model.entity.User;
 import org.apache.log4j.Logger;
 
-import javax.crypto.spec.OAEPParameterSpec;
-import java.awt.font.OpenType;
 import java.sql.*;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public class JDBCBillDao implements BillDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCBillDao.class);
@@ -36,14 +34,14 @@ public class JDBCBillDao implements BillDao {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e);
-            throw  new RuntimeException(e);
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public List<Bill> findByClient(User client) {
         try (PreparedStatement ps
-                     = connection.prepareStatement(BillQuery.SELECT_BY_CLIENT)){
+                     = connection.prepareStatement(BillQuery.SELECT_BY_CLIENT)) {
             ps.setInt(1, client.getId());
             ResultSet resultSet = ps.executeQuery();
 
@@ -56,7 +54,7 @@ public class JDBCBillDao implements BillDao {
 
     @Override
     public List<Bill> getWithLimit(User client, int start, int total) {
-        try (PreparedStatement ps = connection.prepareStatement(BillQuery.SELECT_WITH_LIMIT)){
+        try (PreparedStatement ps = connection.prepareStatement(BillQuery.SELECT_WITH_LIMIT)) {
             ps.setInt(1, client.getId());
             ps.setInt(2, start);
             ps.setInt(3, total);
@@ -72,7 +70,7 @@ public class JDBCBillDao implements BillDao {
     @Override
     public Optional<Bill> findById(int id) {
         try (PreparedStatement ps
-                     = connection.prepareStatement(BillQuery.SELECT_BY_ID)){
+                     = connection.prepareStatement(BillQuery.SELECT_BY_ID)) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -97,8 +95,7 @@ public class JDBCBillDao implements BillDao {
             ResultSet resultSet = statement.executeQuery(BillQuery.SELECT_ALL);
 
             return billMapper.extractListFromResultSet(resultSet);
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             LOGGER.error(e);
             throw new RuntimeException(e);
         }

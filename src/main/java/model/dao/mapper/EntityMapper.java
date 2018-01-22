@@ -7,6 +7,8 @@ import java.util.Map;
 
 public interface EntityMapper<E> {
     E extractFromResultSet(ResultSet resultSet) throws SQLException;
+
     E makeUnique(Map<Integer, E> map, E entity);
+
     List<E> extractListFromResultSet(ResultSet resultSet) throws SQLException;
 }

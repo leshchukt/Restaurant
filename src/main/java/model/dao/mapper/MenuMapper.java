@@ -10,17 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MenuMapper implements EntityMapper<Menu>{
+public class MenuMapper implements EntityMapper<Menu> {
     @Override
     public List<Menu> extractListFromResultSet(ResultSet resultSet) throws SQLException {
         List<Menu> meals = new ArrayList<>();
 
-        Map<Integer,Menu> menuMap = new HashMap<>();
-        Map<Integer,Category> categoryMap = new HashMap<>();
+        Map<Integer, Menu> menuMap = new HashMap<>();
+        Map<Integer, Category> categoryMap = new HashMap<>();
 
         CategoryMapper categoryMapper = new CategoryMapper();
 
-        while ( resultSet.next() ) {
+        while (resultSet.next()) {
             Category category = categoryMapper.makeUnique(
                     categoryMap,
                     categoryMapper.extractFromResultSet(resultSet)
@@ -37,8 +37,8 @@ public class MenuMapper implements EntityMapper<Menu>{
     }
 
     @Override
-    public Menu extractFromResultSet(ResultSet resultSet) throws SQLException{
-         return Menu.builder()
+    public Menu extractFromResultSet(ResultSet resultSet) throws SQLException {
+        return Menu.builder()
                 .setId(resultSet.getInt(ColumnLabel.ID_MENU))
                 .setTitle(resultSet.getString(ColumnLabel.TITLE))
                 .setPrice(resultSet.getDouble(ColumnLabel.PRICE))

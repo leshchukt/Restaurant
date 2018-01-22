@@ -17,7 +17,7 @@
 }
 
 .login_button {
-    color:dimgrey;
+    color: dimgrey;
     background: aliceblue;
     padding: 14px 20px;
     margin: 8px 0;
@@ -29,7 +29,8 @@
 .language-box {
     left: 80%;
 }
-.language-box input{
+
+.language-box input {
     width: 5%;
     padding: 6px 10px;
     margin: 8px 0;
@@ -48,10 +49,10 @@
     vertical-align: center;
 }
 
-.left-menu li{
-    display:block;
-    height:15%;
-    color:dimgrey;
+.left-menu li {
+    display: block;
+    height: 15%;
+    color: dimgrey;
     background: aliceblue;
     padding: 0;
     margin: 0;
@@ -59,9 +60,9 @@
     vertical-align: middle;
 }
 
-.left-menu li a{
+.left-menu li a {
     padding: 5px;
-    text-transform:uppercase;
+    text-transform: uppercase;
     text-align: center;
     text-underline: none;
     font-size: 16px;
@@ -69,10 +70,11 @@
     display: block;
 }
 
-.left-menu li a:hover{
+.left-menu li a:hover {
     background: whitesmoke;
-    color:dimgrey;
+    color: dimgrey;
 }
+
 .content {
     float: right;
     width: 70%;

@@ -11,7 +11,7 @@ public class PriceTag extends TagSupport {
 
     private double price;
 
-    public void setPrice(double price){
+    public void setPrice(double price) {
         this.price = price;
     }
 

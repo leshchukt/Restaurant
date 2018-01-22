@@ -8,14 +8,19 @@ public class User {
     private LocalDate birthDate;
     private Role role;
 
-    private User(){}
+    private User() {
+    }
 
-    public void setId(int id) {
-        this.id = id;
+    public static Builder builder() {
+        return new User().new Builder();
     }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNickname() {
@@ -30,12 +35,9 @@ public class User {
         return role;
     }
 
-    public static Builder builder() {
-        return new User().new Builder();
-    }
-
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
         public User build() {
             return User.this;

@@ -1,6 +1,5 @@
 package model.entity;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Bill {
@@ -10,7 +9,12 @@ public class Bill {
     private User admin;
     private double price;
 
-    private Bill(){}
+    private Bill() {
+    }
+
+    public static Builder builder() {
+        return new Bill().new Builder();
+    }
 
     public int getIdOrder() {
         return idOrder;
@@ -24,28 +28,24 @@ public class Bill {
         return order;
     }
 
-    public User getAdmin() {
-        return admin;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public double getPrice() {
-        return price;
+    public User getAdmin() {
+        return admin;
     }
 
     public void setAdmin(User admin) {
         this.admin = admin;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public double getPrice() {
+        return price;
     }
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public static Builder builder(){
-        return new Bill().new Builder();
     }
 
     public void pay() {
@@ -53,9 +53,10 @@ public class Bill {
     }
 
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Bill build(){
+        public Bill build() {
             return Bill.this;
         }
 

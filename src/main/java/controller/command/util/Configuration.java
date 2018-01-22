@@ -12,31 +12,30 @@ public class Configuration {
         load();
     }
 
-    private void load() {
-        try(InputStream inputStream = this.getClass().getResourceAsStream("/configuration.properties")){
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            factoryClass = properties.getProperty("dao.factory.class");
-            secretKey = properties.getProperty("secret.key");
-        }
-        catch(IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static class Holder{
-        private static Configuration INSTANCE = new Configuration();
-    }
-
     public static Configuration getInstance() {
         return Holder.INSTANCE;
     }
 
-    public String getFactoryClass(){
+    private void load() {
+        try (InputStream inputStream = this.getClass().getResourceAsStream("/configuration.properties")) {
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            factoryClass = properties.getProperty("dao.factory.class");
+            secretKey = properties.getProperty("secret.key");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getFactoryClass() {
         return factoryClass;
     }
 
     public String getSecretKey() {
         return secretKey;
+    }
+
+    public static class Holder {
+        private static Configuration INSTANCE = new Configuration();
     }
 }

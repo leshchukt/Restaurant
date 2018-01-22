@@ -5,7 +5,6 @@ import org.apache.log4j.Logger;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -14,7 +13,7 @@ public class DateTimeTag extends TagSupport {
 
     private LocalDateTime dateTime;
 
-    public void setDateTime(LocalDateTime dateTime){
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

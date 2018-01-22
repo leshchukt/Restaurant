@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryMapper implements EntityMapper<Category>{
+public class CategoryMapper implements EntityMapper<Category> {
 
     @Override
-    public List<Category> extractListFromResultSet(ResultSet resultSet) throws SQLException{
+    public List<Category> extractListFromResultSet(ResultSet resultSet) throws SQLException {
         List<Category> categories = new ArrayList<>();
 
         while (resultSet.next()) {

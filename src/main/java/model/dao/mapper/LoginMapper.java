@@ -13,9 +13,9 @@ public class LoginMapper implements EntityMapper<Login> {
 
     @Override
     public List<Login> extractListFromResultSet(ResultSet resultSet) throws SQLException {
-        Map<Integer,Login> loginMap = new HashMap<>();
+        Map<Integer, Login> loginMap = new HashMap<>();
 
-        while ( resultSet.next() ){
+        while (resultSet.next()) {
             makeUnique(loginMap, extractFromResultSet(resultSet));
         }
         return new ArrayList<>(loginMap.values());

@@ -5,10 +5,19 @@ public class Login {
     private String email;
     private String password;
 
-    private Login(){}
+    private Login() {
+    }
+
+    public static Builder builder() {
+        return new Login().new Builder();
+    }
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -17,14 +26,6 @@ public class Login {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public static Builder builder(){
-        return new Login().new Builder();
     }
 
     @Override
@@ -38,9 +39,10 @@ public class Login {
 
 
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Login build(){
+        public Login build() {
             return Login.this;
         }
 

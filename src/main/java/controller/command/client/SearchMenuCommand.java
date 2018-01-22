@@ -2,8 +2,8 @@ package controller.command.client;
 
 import controller.command.Command;
 import model.entity.Category;
-import model.service.ClientMenuService;
 import model.service.ClientCategoryService;
+import model.service.ClientMenuService;
 import model.service.implementation.CategoryService;
 import model.service.implementation.MenuService;
 import org.apache.log4j.Logger;
@@ -41,13 +41,13 @@ public class SearchMenuCommand implements Command {
 
     private void initCommand(HttpServletRequest request) {
         String parameterCategory = request.getParameter(PARAMETER_CATEGORY);
-        if(parameterCategory != null) {
+        if (parameterCategory != null) {
             categoryId = Integer.parseInt(parameterCategory);
             return;
         }
         Object attributeCategory = request.getSession().getAttribute(ATTRIBUTE_CURRENT);
-        if(attributeCategory != null ){
-            categoryId = ((Category)attributeCategory).getId();
+        if (attributeCategory != null) {
+            categoryId = ((Category) attributeCategory).getId();
             return;
         }
         categoryId = 1;

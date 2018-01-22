@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeclineOrderAdminCommand implements Command{
+public class DeclineOrderAdminCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(DeclineOrderAdminCommand.class);
 
     private static final String REDIRECT_PAGE = "redirect:" + CommandFactory.ADMIN_HOME;
@@ -32,8 +32,7 @@ public class DeclineOrderAdminCommand implements Command{
         try {
             billService.declineOrder(order.getId());
             LOGGER.info("Admin: " + admin.getId() + " declined order: " + order.getId());
-        }
-        catch (ConcurrentProcessingException e){
+        } catch (ConcurrentProcessingException e) {
             request.setAttribute(ATTRIBUTE_MESSAGE, "error.concurrency.processed");
         }
         return REDIRECT_PAGE;

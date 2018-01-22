@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AdminOrderService {
     Order getFullInfoAboutOrder(int idOrder);
+
     List<Order> getActiveOrders();
 }

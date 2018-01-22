@@ -14,17 +14,14 @@ import java.util.List;
 public class GetBillsCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(GetBillsCommand.class);
 
-    private static final String ATTRIBUTE_USER = "user";
-    private static final String ATTRIBUTE_BILLS = "userBills";
-    private static final String ATTRIBUTE_COUNT_OF_BILLS = "countOfBills";
+    private static String ATTRIBUTE_USER = "user";
+    private static String ATTRIBUTE_BILLS = "userBills";
+    private static String ATTRIBUTE_COUNT_OF_BILLS = "countOfBills";
     private static String PARAMETER_PAGE = "page";
-
+    private String page;
     private ClientBillService billService = BillService.getInstance();
-
     private User client;
     private List<Bill> billsForCount;
-
-    String page;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
@@ -43,15 +40,15 @@ public class GetBillsCommand implements Command {
         int total = 2;
         int size = 1;
 
-        if (page == null) {
+        billsForCount = billService.getBillsByClient(client);
+        size *= billsForCount.size();
+
+        if (!checkPageNumber(page, size)) {
             idPage = 1;
         } else {
             idPage = Integer.parseInt(page) - 1;
             idPage = idPage * total + 1;
         }
-
-        billsForCount = billService.getBillsByClient(client);
-        size *= billsForCount.size();
 
         if (size % total == 0) {
             request.setAttribute(ATTRIBUTE_COUNT_OF_BILLS, size / total);
@@ -60,6 +57,16 @@ public class GetBillsCommand implements Command {
         }
 
         return billService.getLimitedBills(client, idPage - 1, total);
+    }
+
+    private boolean checkPageNumber(String page, int size) {
+        try {
+            int pageNumber = Integer.parseInt(page);
+            if (pageNumber < 1 || pageNumber > size) return false;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void initCommand(HttpServletRequest request) {

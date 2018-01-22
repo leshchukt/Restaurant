@@ -9,22 +9,26 @@ import model.service.ClientCategoryService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * CategoryService execute all operations with Category via dao implementation
+ */
 public class CategoryService implements ClientCategoryService {
 
     private DaoFactory daoFactory;
 
-    private CategoryService(){
+    private CategoryService() {
         daoFactory = DaoFactory.getInstance();
     }
 
-    private static class Holder{
-        private static CategoryService INSTANCE = new CategoryService();
-    }
-
-    public static CategoryService getInstance(){
+    public static CategoryService getInstance() {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Method for getting all categories in database
+     *
+     * @return list of categories
+     */
     @Override
     public List<Category> getAllCategories() {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
@@ -33,9 +37,15 @@ public class CategoryService implements ClientCategoryService {
         }
     }
 
+    /**
+     * Method for getting particular category
+     *
+     * @param idCategory identifies the category
+     * @return
+     */
     @Override
     public Category getById(int idCategory) {
-        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             CategoryDao categoryDao = daoFactory.createCategoryDao(connectionDao);
             Optional<Category> category = categoryDao.findById(idCategory);
             if (category.isPresent()) {
@@ -45,6 +55,8 @@ public class CategoryService implements ClientCategoryService {
         }
     }
 
-
+    private static class Holder {
+        private static CategoryService INSTANCE = new CategoryService();
+    }
 
 }

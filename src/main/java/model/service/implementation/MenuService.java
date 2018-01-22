@@ -12,21 +12,27 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This service execute all operations with Menu via dao implementation
+ */
 public class MenuService implements ClientMenuService {
     DaoFactory daoFactory;
 
-    private MenuService(){
+    private MenuService() {
         daoFactory = DaoFactory.getInstance();
     }
 
-    private static class Holder{
-        private static MenuService INSTANCE = new MenuService();
-    }
-
-    public static MenuService getInstance(){
+    public static MenuService getInstance() {
         return Holder.INSTANCE;
     }
 
+    /**
+     * Adding menuItem to menu list
+     *
+     * @param idMenu to add
+     * @param amount to add
+     * @param menu
+     */
     @Override
     public void addMealToList(int idMenu, int amount, List<Menu> menu) {
         Menu newMenuItem = getMenuItemWithAmount(idMenu, amount);
@@ -41,8 +47,15 @@ public class MenuService implements ClientMenuService {
         }
     }
 
+    /**
+     * Set amount to menu, which is found by idMenu
+     *
+     * @param idMenu
+     * @param amount
+     * @return menu entity with adjusted amount
+     */
     public Menu getMenuItemWithAmount(int idMenu, int amount) {
-        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             MenuDao menuDao = daoFactory.createMenuDao(connectionDao);
             Optional<Menu> menuItem = menuDao.findById(idMenu);
             if (menuItem.isPresent()) {
@@ -54,11 +67,18 @@ public class MenuService implements ClientMenuService {
         }
     }
 
+    /**
+     * Removes menuItem from menu list
+     *
+     * @param idMenu to remove
+     * @param amount to remove
+     * @param menu
+     */
     @Override
     public void removeMealFromList(int idMenu, int amount, List<Menu> menu) {
         Menu removedMenuItem = getMenuItemWithAmount(idMenu, amount);
 
-        for (Iterator<Menu> it = menu.iterator(); it.hasNext();) {
+        for (Iterator<Menu> it = menu.iterator(); it.hasNext(); ) {
             Menu menuItem = it.next();
             if (menuItem.equals(removedMenuItem)) {
                 int restAmount = menuItem.getAmount() - removedMenuItem.getAmount();
@@ -71,9 +91,15 @@ public class MenuService implements ClientMenuService {
         }
     }
 
+    /**
+     * find menuItems by idCategory
+     *
+     * @param idCategory
+     * @return menu list in this category
+     */
     @Override
     public List<Menu> getMenuByCategory(int idCategory) {
-        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
+        try (ConnectionDao connectionDao = daoFactory.getConnectionDao()) {
             MenuDao menuDao = daoFactory.createMenuDao(connectionDao);
             CategoryDao categoryDao = daoFactory.createCategoryDao(connectionDao);
             Optional<Category> category = categoryDao.findById(idCategory);
@@ -82,6 +108,10 @@ public class MenuService implements ClientMenuService {
             }
             throw new RuntimeException(NO_ID_EXCEPTION_MESSAGE);
         }
+    }
+
+    private static class Holder {
+        private static MenuService INSTANCE = new MenuService();
     }
 
 }

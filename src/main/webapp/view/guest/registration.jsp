@@ -8,8 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${sessionScope.locale}" scope="session" />
-<fmt:setBundle basename="message" var="resourceBundle" />
+<fmt:setLocale value="${sessionScope.locale}" scope="session"/>
+<fmt:setBundle basename="message" var="resourceBundle"/>
 <html>
 <head>
     <title>Registration Form</title>
@@ -33,12 +33,12 @@
            pattern=".{6,}"
            title="<fmt:message key="password.description" bundle="${resourceBundle}"/>"
            placeholder="<fmt:message key="password" bundle="${resourceBundle}"/>"
-           name="password" required /><br/>
+           name="password" required/><br/>
     <input type="password"
            pattern=".{6,}"
            title="<fmt:message key="password.description" bundle="${resourceBundle}"/>"
            placeholder="<fmt:message key="password.validation" bundle="${resourceBundle}"/>"
-           name="repeatedPassword" required /><br/>
+           name="repeatedPassword" required/><br/>
     <input type="text"
            pattern="([A-Z][a-z]{1,13} ?){1,5}"
            title="<fmt:message key="registration.name.description" bundle="${resourceBundle}"/> "
@@ -48,7 +48,7 @@
            title="<fmt:message key="registration.birth.date.description" bundle="${resourceBundle}"/>"
            placeholder="<fmt:message key="registration.birth.date" bundle="${resourceBundle}"/>"
            onfocus="(this.type='date')"
-           name = "birthDate" required/><br/>
+           name="birthDate" required/><br/>
     <button class="login_button">
         <fmt:message key="registration.register" bundle="${resourceBundle}"/>
     </button>

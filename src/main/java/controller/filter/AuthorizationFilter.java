@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+
 import static controller.command.CommandFactory.*;
 
 @WebFilter(urlPatterns = {"/restaurant/*"})
@@ -92,16 +93,15 @@ public class AuthorizationFilter implements Filter {
             request.setAttribute("uri", uri);
         }
 
-        if(isLoggedIn){
-            if(user.getRole() == Role.CLIENT){
+        if (isLoggedIn) {
+            if (user.getRole() == Role.CLIENT) {
                 request.setAttribute("uri", CLIENT_HOME);
-            }
-            else {
+            } else {
                 request.setAttribute("uri", ADMIN_HOME);
             }
         }
 
-        if(needToSignIn){
+        if (needToSignIn) {
             request.setAttribute("uri", LOGIN_PAGE);
         }
         filterChain.doFilter(request, response);

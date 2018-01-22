@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface MenuDao extends GenericDao<Menu> {
     List<Menu> findByCategory(Category category);
+
     List<Menu> getMenuFromOrder(Order order);
 }

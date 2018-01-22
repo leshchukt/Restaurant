@@ -28,18 +28,13 @@ public class RegisterUserCommand implements Command {
     private final String BIRTH_DATE_PARAMETER = "birthDate";
     private final String ERROR = "registrationErrors";
     private final String USER_ATTRIBUTE = "user";
-
-    //Errors
-    private String VALIDATION_ERROR = "error.val.password";
     private final String WRONG_DATE = "registration.birth.date.description";
     private final String NOT_UNIQUE_EMAILS_ERROR = "error.not.unique";
-
     private final String DATE_FORMAT = "yyyy-MM-dd";
-
-    private RegisterLoginService loginService = LoginService.getInstance();
-
     private final LocalDate MAX_DATE = LocalDate.now().minusYears(18);
-
+    //Errors
+    private String VALIDATION_ERROR = "error.val.password";
+    private RegisterLoginService loginService = LoginService.getInstance();
     private HttpServletRequest request;
     private String nickname;
     private String email;

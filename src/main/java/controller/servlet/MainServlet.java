@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name = "main", value = "/restaurant/*")
-public class MainServlet extends HttpServlet{
+public class MainServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -26,7 +26,7 @@ public class MainServlet extends HttpServlet{
     }
 
     private void processQuery(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException{
+            throws ServletException, IOException {
         String uri = (String) request.getAttribute("uri");
         Command command = CommandFactory.create(uri);
         String page = command.execute(request, response);

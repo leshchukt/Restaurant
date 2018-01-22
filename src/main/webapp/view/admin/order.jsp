@@ -32,7 +32,8 @@
 
 <div class="information-box">
     <h2><fmt:message key="admin.client.information" bundle="${resourceBundle}"/></h2>
-    <p2><fmt:message key="client.home.name" bundle="${resourceBundle}"/>${sessionScope.currentOrder.client.nickname}</p2>
+    <p2><fmt:message key="client.home.name"
+                     bundle="${resourceBundle}"/>${sessionScope.currentOrder.client.nickname}</p2>
     <br>
     <p2><fmt:message key="client.home.birthday" bundle="${resourceBundle}"/>
         <ct:date date="${sessionScope.currentOrder.client.birthDate}"/></p2>
@@ -51,8 +52,8 @@
     <form action="/restaurant/admin/accept_order" class="button-forms">
         <button class="button-green"><fmt:message key="order.accept" bundle="${resourceBundle}"/></button>
     </form>
-    <form action="/restaurant/admin/decline_order" class = "button-forms">
-        <button class="button-red"><fmt:message key="order.decline" bundle="${resourceBundle}" /></button>
+    <form action="/restaurant/admin/decline_order" class="button-forms">
+        <button class="button-red"><fmt:message key="order.decline" bundle="${resourceBundle}"/></button>
     </form>
 </div>
 </body>

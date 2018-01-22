@@ -1,7 +1,6 @@
 package model.dao.implementation;
 
 import model.dao.MenuDao;
-import model.dao.implementation.query.LoginQuery;
 import model.dao.implementation.query.MenuQuery;
 import model.dao.mapper.CategoryMapper;
 import model.dao.mapper.ColumnLabel;
@@ -33,7 +32,7 @@ public class JDBCMenuDao implements MenuDao {
 
     @Override
     public Optional<Menu> findById(int id) {
-        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ID)){
+        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ID)) {
             ps.setInt(1, id);
             ResultSet resultSet = ps.executeQuery();
 
@@ -52,7 +51,7 @@ public class JDBCMenuDao implements MenuDao {
     @Override
     public List<Menu> findAll() {
 
-        try (Statement statement = connection.createStatement()){
+        try (Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(MenuQuery.SELECT_ALL);
 
             return menuMapper.extractListFromResultSet(resultSet);
@@ -65,10 +64,10 @@ public class JDBCMenuDao implements MenuDao {
     @Override
     public List<Menu> findByCategory(Category category) {
         List<Menu> menus = new ArrayList<>();
-        Map<Integer,Menu> menuMap = new HashMap<>();
+        Map<Integer, Menu> menuMap = new HashMap<>();
 
         int idCategory = category.getId();
-        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_CATEGORY)){
+        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_CATEGORY)) {
             ps.setInt(1, idCategory);
             ResultSet resultSet = ps.executeQuery();
             while (resultSet.next()) {
@@ -88,18 +87,18 @@ public class JDBCMenuDao implements MenuDao {
 
     @Override
     public List<Menu> getMenuFromOrder(Order order) {
-        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ORDER)){
+        try (PreparedStatement ps = connection.prepareStatement(MenuQuery.SELECT_BY_ORDER)) {
             ps.setInt(1, order.getId());
             ResultSet resultSet = ps.executeQuery();
 
             List<Menu> meals = new ArrayList<>();
 
-            Map<Integer,Menu> menuMap = new HashMap<>();
-            Map<Integer,Category> categoryMap = new HashMap<>();
+            Map<Integer, Menu> menuMap = new HashMap<>();
+            Map<Integer, Category> categoryMap = new HashMap<>();
 
             CategoryMapper categoryMapper = new CategoryMapper();
 
-            while ( resultSet.next() ) {
+            while (resultSet.next()) {
                 Category category = categoryMapper.makeUnique(
                         categoryMap,
                         categoryMapper.extractFromResultSet(resultSet)

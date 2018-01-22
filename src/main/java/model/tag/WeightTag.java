@@ -11,7 +11,7 @@ public class WeightTag extends TagSupport {
 
     private int weight;
 
-    public void setWeight(int weight){
+    public void setWeight(int weight) {
         this.weight = weight;
     }
 

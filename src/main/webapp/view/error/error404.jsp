@@ -5,7 +5,7 @@
   Time: 18:13
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" isErrorPage="true" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.locale}" scope="session"/>
 <fmt:setBundle basename="message" var="resourceBundle"/>
