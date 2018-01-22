@@ -41,7 +41,7 @@ public class MenuService implements ClientMenuService {
         }
     }
 
-    private Menu getMenuItemWithAmount(int idMenu, int amount) {
+    public Menu getMenuItemWithAmount(int idMenu, int amount) {
         try (ConnectionDao connectionDao = daoFactory.getConnectionDao()){
             MenuDao menuDao = daoFactory.createMenuDao(connectionDao);
             Optional<Menu> menuItem = menuDao.findById(idMenu);

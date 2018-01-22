@@ -101,5 +101,9 @@ public class Menu {
             return this;
         }
 
+        public Builder setAmount(int amount) {
+            Menu.this.amount = amount;
+            return this;
+        }
     }
 }
