@@ -21,6 +21,7 @@ public class RemoveMealCommand implements Command {
     private static String ATTRIBUTE_USER = "user";
     private static String MESSAGE_ATTRIBUTE = "message";
     private static String MESSAGE_REMOVED = "message.removed";
+    private static String MESSAGE_WRONG_AMOUNT = "message.wrong.amount";
 
     private ClientMenuService menuService = MenuService.getInstance();
 
@@ -32,6 +33,10 @@ public class RemoveMealCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        if (!validateAmount(request)) {
+            request.setAttribute(MESSAGE_ATTRIBUTE, MESSAGE_WRONG_AMOUNT);
+            return CLIENT_ORDER_PAGE;
+        }
         initCommand(request);
         menuService.removeMealFromList(idMenu, amount, menu);
 
@@ -40,6 +45,18 @@ public class RemoveMealCommand implements Command {
         request.getSession().setAttribute(ATTRIBUTE_ORDER_MEALS, menu);
 
         return CLIENT_ORDER_PAGE;
+    }
+
+    @SuppressWarnings("Duplicates")
+    private boolean validateAmount(HttpServletRequest request) {
+        String sAmount = request.getParameter(PARAMETER_AMOUNT);
+        try {
+            int amount = Integer.parseInt(sAmount);
+            if (amount < 1 || amount > 20) return false;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @SuppressWarnings("unchecked")

@@ -21,6 +21,7 @@ public class AddMealToOrderCommand implements Command {
     private static String PARAMETER_AMOUNT = "amount";
     private static String MESSAGE_ATTRIBUTE = "message";
     private static String MESSAGE_ADDED = "message.added";
+    private static String MESSAGE_WRONG_AMOUNT = "message.wrong.amount";
     private static String ATTRIBUTE_ORDER_MENU = "currentOrder";
     private static String ATTRIBUTE_USER = "user";
 
@@ -35,6 +36,10 @@ public class AddMealToOrderCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        if (!validateAmount(request)) {
+            request.setAttribute(MESSAGE_ATTRIBUTE, MESSAGE_WRONG_AMOUNT);
+            return REDIRECT_PAGE;
+        }
         initCommand(request);
 
         menuService.addMealToList(idMenu, amount, menu);
@@ -45,6 +50,18 @@ public class AddMealToOrderCommand implements Command {
 
         return REDIRECT_PAGE;
 
+    }
+
+    @SuppressWarnings("Duplicates")
+    private boolean validateAmount(HttpServletRequest request) {
+        String sAmount = request.getParameter(PARAMETER_AMOUNT);
+        try {
+            int amount = Integer.parseInt(sAmount);
+            if (amount < 1 || amount > 20) return false;
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void initCommand(HttpServletRequest request) {

@@ -29,11 +29,13 @@ public class RegisterUserCommand implements Command {
     private final String ERROR = "registrationErrors";
     private final String USER_ATTRIBUTE = "user";
     private final String WRONG_DATE = "registration.birth.date.description";
-    private final String NOT_UNIQUE_EMAILS_ERROR = "error.not.unique";
     private final String DATE_FORMAT = "yyyy-MM-dd";
     private final LocalDate MAX_DATE = LocalDate.now().minusYears(18);
     //Errors
     private String VALIDATION_ERROR = "error.val.password";
+    private String NOT_UNIQUE_EMAILS_ERROR = "error.not.unique";
+    private String EMAIL_ERROR = "error.email";
+    private String PASSWORD_ERROR = "error.password";
     private RegisterLoginService loginService = LoginService.getInstance();
     private HttpServletRequest request;
     private String nickname;
@@ -41,13 +43,23 @@ public class RegisterUserCommand implements Command {
     private String password;
     private String repeatedPassword;
     private LocalDate birthDate;
-
+    //Regex
+    private final String EMAIL_REGEX = "[A-Za-z0-9._]+@[a-z]+\\.(com|net|ru)";
+    private final String PASSWORD_REGEX = ".{6,}";
     private Login login;
     private User user;
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         initCommand(request);
+
+        if (!validateEmail()) {
+            return processError(EMAIL_ERROR);
+        }
+
+        if (!validatePassword()) {
+            return processError(PASSWORD_ERROR);
+        }
 
         if (!isPasswordMatch()) {
             return processError(VALIDATION_ERROR);
@@ -69,6 +81,15 @@ public class RegisterUserCommand implements Command {
         } catch (EmailAlreadyExistsException e) {
             return processError(NOT_UNIQUE_EMAILS_ERROR);
         }
+    }
+
+    private boolean validatePassword() {
+        return password.matches(PASSWORD_REGEX)
+                && repeatedPassword.matches(PASSWORD_REGEX);
+    }
+
+    private boolean validateEmail() {
+        return email.matches(EMAIL_REGEX);
     }
 
     private String processError(String errorAttribute) {
