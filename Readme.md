@@ -1,3 +1,45 @@
+=== English ===
+
+21. System Restaurant. The customer places an order from the Menu.
+The administrator confirms the order and sends it to the kitchen for execution.
+The administrator creates a bill. The customer pays for it.
+
+You need to build a web application that supports the following
+functionality:
+1. Based on the entities of the domain, create classes
+describing them.
+2. Classes and methods must have functionality that reflects their
+names and must be properly structured by packages.
+3. Information on the subject area is stored in the database. For access
+use the JDBC API via the default connection pool or developed by yourself. As a DBMS
+MySQL is recommended.
+4. The application must support working with Cyrillic (to be
+multilingual), including storing information in the database.
+5. The code must be documented.
+6. The application must be covered by unit tests.
+7. When developing business logic, use sessions and filters, and
+events in the system to handle using Log4j.
+8. In the application, you must implement Pagination, Transaction depending on your project.
+9. Using servlets and JSPs, implement the functionality,
+proposed in the formulation of a specific problem.
+10. Use JSTL in JSP pages
+11. The application must respond correctly to all sorts of errors and exceptions 
+(User should never see stack trace on front-end side).
+12. The application must have an authorization and authentication system.
+
+Installation Instructions:
+1. Download / clone this repository.
+2. Database dump is located in the src / dumpDB folder.
+3. Start Tomcat.
+
+Startup Instructions:
+1. Authentication
+1.1. as administrator: email: leshchuk.tetiana@gmail.com password: leshchukt
+1.2. with client rights: email: client@client.com password: client
+
+
+=== Russian ===
+
 21. Система Ресторан. Клиент осуществляет заказ из Меню. 
 Администратор подтверждает Заказ и отправляет его на кухню для исполнения. 
 Администратор выставляет Счет. Клиент производит его оплату.
@@ -38,4 +80,3 @@
 1. Аутентификация
 1.1. с правами администратора: email: leshchuk.tetiana@gmail.com password: leshchukt
 1.2. с правами клиента:        email: client@client.com          password: client
-
